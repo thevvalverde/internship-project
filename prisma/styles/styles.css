@@ -1,0 +1,23 @@
+.policy-div {
+    background-color: rgb(118, 119, 189);
+    padding: 2% 3%;
+    border: 1px solid black;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    text-align: start;
+    border-radius: 10px;
+}
+
+.child-div {
+    flex: 1;
+    border: 1px solid rgb(58, 58, 58);
+    padding: 2%;
+}
+
+
+.consent-description {
+    display: inline-block;
+    margin-left: 30px;
+    font-size: large;
+}

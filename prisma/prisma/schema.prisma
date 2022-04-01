@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  clientID Int       @id
+  email String
+  Consent  Consent[]
+}
+
+model Consent {
+  consentID      Int              @id
+  description    String
+  subjectOption  Boolean
+  consentDate    DateTime         @default(now()) @updatedAt
+  policy         Policy           @relation(fields: [policyID], references: [policyID])
+  policyID       Int
+  organization   Organization     @relation(fields: [orgReference], references: [organizationID])
+  orgReference   Int
+  subject        Client           @relation(fields: [subjectId], references: [clientID])
+  subjectId      Int
+  revokeDate     DateTime?        @default(now())
+  validUntil     DateTime
+  ConsentHistory ConsentHistory[]
+}
+
+model Policy {
+  policyID Int       @id
+  policy   String
+  Consent  Consent[]
+}
+
+model Organization {
+  organizationID Int       @id
+  contactPhone   String
+  contactEmail   String
+  Consent        Consent[]
+}
+
+model ConsentHistory {
+  id           Int      @id
+  consent      Consent  @relation(fields: [consentID], references: [consentID])
+  consentID    Int
+  changedValue Boolean
+  timestamp    DateTime @default(now())
+}

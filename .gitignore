@@ -1,0 +1,6 @@
+cli
+*/.next
+*/node_modules
+*/.env
+*/.git
+*/.gitignore
