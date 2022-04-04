@@ -5,31 +5,26 @@ const data = {
         {
             description: "I consent to something and I agree to something else",
             subjectOption: false,
-            orgReference: 2,
             validUntil: new Date('2029-02-28')
         },
         {
             description: "I agree that this is a consent text",
             subjectOption: false,
-            orgReference: 2,
             validUntil: new Date('2029-02-28')
         },
         {
             description: "I consent to reading this sample text",
             subjectOption: false,
-            orgReference: 2,
             validUntil: new Date('2029-02-28')
         },
         {
             description: "I am a human being",
             subjectOption: false,
-            orgReference: 2,
             validUntil: new Date('2029-02-28')
         },
         {
             description: "I concurr that this is one of the options ever written",
             subjectOption: false,
-            orgReference: 2,
             validUntil: new Date('2029-02-28')
         },
     ]

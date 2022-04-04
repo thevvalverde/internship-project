@@ -8,6 +8,7 @@ export default function Home() {
     const [receivedData, setReceivedData] = useState({})
     const [userInfo, setUserInfo] = useState({})
     const [consents, setConsents] = useState([])
+    const [policy, setPolicy] = useState({})
 
     useEffect(() => {
         window.addEventListener("message", (e) => {
@@ -26,6 +27,7 @@ export default function Home() {
         if(JSON.stringify(receivedData) === "{}") {
             setUserInfo({})            
             setConsents([])
+            setPolicy({})
             return
         }
 
@@ -43,14 +45,20 @@ export default function Home() {
         console.log(JSON.stringify(data))
         setUserInfo(data.user)
         setConsents(data.consents)
+        setPolicy(data.policy)
 
     }, [receivedData])
 
-    return <div>
-                <p>{"Received from eXample.com => " + JSON.stringify(receivedData)}</p> 
-                <p>{"Fetched inside iFrame => " + JSON.stringify(userInfo)}</p>
-                {consents.map((consent) => {
-                    return <h6 key={consent.consentID}>{consent.description}</h6>
-                })}
+    return <div className="main-container">
+                <div className="child-container">
+                    <h2 className="centered">Consent Policy</h2>
+                    {policy.policy}
+                </div>
+                <div className="separator"></div>
+                <div className="child-container">
+                    {consents.map((consent) => {
+                        return <h6 key={consent.consentID}>{consent.description}</h6>
+                    })}
+                </div>
             </div>
 }
