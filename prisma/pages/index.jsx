@@ -11,8 +11,11 @@ export default function Home() {
 
     useEffect(() => {
         window.addEventListener("message", (e) => {
-            // if(e.origin !== "http://localhost:3030")
-            //     return
+            if(e.origin !== "http://localhost:3000"){
+                console.log("returning");
+                return
+            }
+            console.log(e);
             // alert("window data: " + JSON.stringify(e.data, null, 2));
             // alert(e.origin)
             setReceivedData(e.data)
