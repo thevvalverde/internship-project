@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import MyIframe from "./MyIframe";
+import data from "./data"
 
 export default function Layout({children}) {
 
@@ -26,9 +27,9 @@ export default function Layout({children}) {
             return;
         // console.log("got here");
         // alert(JSON.stringify(values, null, 2))
-        const data = {...userInfo, companyReference: 1}
+        const sendData = {userInfo, data}
 
-        iFrameRef.current.contentWindow.postMessage(data, origin)
+        iFrameRef.current.contentWindow.postMessage(sendData, origin)
     }
 
     const removeUserInfo = () => {
