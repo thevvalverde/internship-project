@@ -10,44 +10,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Client {
-  clientID Int       @id
-  email String
-  Consent  Consent[]
+model client {
+  id        Int  @default(autoincrement()) @id 
+  email     String @unique
+  consent   consent[]
 }
 
-model Consent {
-  consentID      Int              @id
-  description    String
-  subjectOption  Boolean
-  consentDate    DateTime         @default(now()) @updatedAt
-  policy         Policy           @relation(fields: [policyID], references: [policyID])
-  policyID       Int
-  organization   Organization     @relation(fields: [orgReference], references: [organizationID])
-  orgReference   Int
-  subject        Client           @relation(fields: [subjectId], references: [clientID])
-  subjectId      Int
-  revokeDate     DateTime?        @default(now())
-  validUntil     DateTime
-  ConsentHistory ConsentHistory[]
+model consent {
+  id              Int              @default(autoincrement()) @id
+  description     String
+  subjectOption   Boolean
+  consentDate     DateTime         @default(now()) @updatedAt
+  policy          policy           @relation(fields: [policyID], references: [id])
+  policyID        Int
+  organization    organization     @relation(fields: [orgReference], references: [id])
+  orgReference    Int
+  subject         client           @relation(fields: [subjectId], references: [id])
+  subjectId       Int
+  revokeDate      DateTime?        @default(now())
+  validUntil      DateTime
+  consentHistory  consentHistory[]
 }
 
-model Policy {
-  policyID Int       @id
-  policy   String
-  Consent  Consent[]
+model policy {
+  id        Int       @default(autoincrement()) @id 
+  policy    String
+  consent   consent[]
 }
 
-model Organization {
-  organizationID Int       @id
-  contactPhone   String
-  contactEmail   String
-  Consent        Consent[]
+model organization {
+  id              Int        @default(autoincrement()) @id
+  contactPhone    String
+  contactEmail    String
+  consent         consent[]
 }
 
-model ConsentHistory {
-  id           Int      @id
-  consent      Consent  @relation(fields: [consentID], references: [consentID])
+model consentHistory {
+  id           Int      @default(autoincrement()) @id 
+  consent      consent  @relation(fields: [consentID], references: [id])
   consentID    Int
   changedValue Boolean
   timestamp    DateTime @default(now())
