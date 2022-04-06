@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background-color: aliceblue;
 }
 
 .centered {
@@ -14,4 +15,25 @@ body {
     flex: 1;
     border: 1px solid lightgray;
     padding: 1%;
+}
+
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.open-button {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.hidden {
+    display: none;
+    background-color: transparent;
+}
+
+.form-submit-button {
+    text-align: right; 
 }
