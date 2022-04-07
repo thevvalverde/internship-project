@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Button, Typography } from "@mui/material"
 import { prisma } from "@prisma/client"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -14,13 +14,15 @@ export default function Home() {
     const [userInfo, setUserInfo] = useState({})
     const [consents, setConsents] = useState([])
     const [policy, setPolicy] = useState({})
-    const [visible, setVisible] = useState(true)
+    const [visible, setVisible] = useState(false)
 
     const collapse = () => {
         setVisible(false)
     }
 
     const expand = () => {
+        if(JSON.stringify(receivedData)=== "{}")
+            return
         setVisible(true)
     }
 
@@ -37,6 +39,7 @@ export default function Home() {
             setUserInfo({})            
             setConsents([])
             setPolicy({})
+            setVisible(false)
             return
         }
         const response = await fetch('/api/get-subject-data', {
@@ -50,6 +53,7 @@ export default function Home() {
         setUserInfo(data.user)
         setConsents(data.consents)
         setPolicy(data.policy)
+        setVisible(true)
 
     }, [receivedData])
 
@@ -80,13 +84,15 @@ export default function Home() {
     return (
         <div>
                 <div className={visible ? "main-container" : "hidden"}>
-                    <div className="child-container">
-                        <h2 className={JSON.stringify(receivedData) === "{}" ? "hidden" : "centered"}>Consent Policy</h2>
-                        {policy.policy}
+                    <div className={visible ? "child-container" : "hidden"}>
+                        <h2 className={JSON.stringify(receivedData) === "{}" ? "hidden" : "centered"}><Typography variant="h4">Consent Policy</Typography> </h2>
+                        <Typography component="p">
+                            {policy.policy}
+                        </Typography>
                     </div>
                     <div className="separator"></div>
-                    <div className="child-container">
-                        <form onSubmit={formik.handleSubmit}>
+                    <div className={visible ? "child-container" : "hidden"}>
+                        <form onSubmit={formik.handleSubmit} className="form">
                             <Consent consents={consents} formik={formik} />
                             <div className={JSON.stringify(receivedData) === "{}" ? "hidden" : "form-submit-button"}>
                                 <Button variant="contained" type="submit">Submit</Button>

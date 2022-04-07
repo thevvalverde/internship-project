@@ -1,6 +1,5 @@
 body {
     margin: 0;
-    background-color: aliceblue;
 }
 
 .centered {
@@ -9,12 +8,14 @@ body {
 
 .main-container {
     display: flex;
+    background-color: aliceblue;
 }
 
 .child-container {
     flex: 1;
     border: 1px solid lightgray;
     padding: 1%;
+    font-family: 'Roboto';
 }
 
 .close-button {
@@ -29,11 +30,20 @@ body {
     bottom: 0;
 }
 
+.form {
+    height: 100%;
+    margin-top: 25px;
+    margin-left: 15px;
+}
+
 .hidden {
     display: none;
     background-color: transparent;
+    border-width: 0;
+    border-style: none;
 }
 
 .form-submit-button {
     text-align: right; 
+    bottom: 0;
 }
