@@ -8,14 +8,23 @@ body {
 
 .main-container {
     display: flex;
-    background-color: aliceblue;
+    background-color: #f0f8ff;
+    border: 2px solid #86C6FF;
+    border-radius: 10px;
 }
 
 .child-container {
     flex: 1;
-    border: 1px solid lightgray;
     padding: 1%;
     font-family: 'Roboto';
+}
+
+.left-child {
+    border-right: 1px solid lightgray;
+}
+
+.right-child {
+    border-left: 1px solid lightgray;
 }
 
 .close-button {

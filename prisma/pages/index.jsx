@@ -84,14 +84,14 @@ export default function Home() {
     return (
         <div>
                 <div className={visible ? "main-container" : "hidden"}>
-                    <div className={visible ? "child-container" : "hidden"}>
+                    <div className={visible ? "child-container left-child" : "hidden"}>
                         <h2 className={JSON.stringify(receivedData) === "{}" ? "hidden" : "centered"}><Typography variant="h4">Consent Policy</Typography> </h2>
                         <Typography component="p">
                             {policy.policy}
                         </Typography>
                     </div>
                     <div className="separator"></div>
-                    <div className={visible ? "child-container" : "hidden"}>
+                    <div className={visible ? "child-container right-child" : "hidden"}>
                         <form onSubmit={formik.handleSubmit} className="form">
                             <Consent consents={consents} formik={formik} />
                             <div className={JSON.stringify(receivedData) === "{}" ? "hidden" : "form-submit-button"}>
@@ -106,8 +106,8 @@ export default function Home() {
                     </div>
                 </div>
                 <div className={visible ? "hidden" : "open-button"}>
-                    <Button aria-label="Open" size="large" onClick={expand} sx={{borderRadius:"100%", backgroundColor:"yellow"}} >
-                        <LaunchIcon />
+                    <Button aria-label="Open" size="large" onClick={expand} sx={{borderRadius:"20%", backgroundColor:"#0084F7"}} >
+                        <LaunchIcon sx={{color: "black"}}/>
                     </Button> 
                 </div>
         </div>
