@@ -1,5 +1,11 @@
-body {
+html, body {
     margin: 0;
+    height:100vh;
+    font-family: 'Roboto'
+}
+
+#__next {
+    height: 100%;
 }
 
 .centered {

@@ -27,7 +27,7 @@ model consent {
   orgReference    Int
   subject         client           @relation(fields: [subjectId], references: [id])
   subjectId       Int
-  revokeDate      DateTime?        @default(now())
+  revokeDate      DateTime?        
   validUntil      DateTime
   consentHistory  consentHistory[]
 }
