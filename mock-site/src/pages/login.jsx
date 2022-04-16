@@ -3,6 +3,7 @@ import { useFormik } from "formik"
 import { Button, TextField } from "@mui/material"
 import {Router, useRouter} from "next/router"
 import Header from "../components/Header";
+import { useCookies } from "react-cookie";
 
 
 async function handleLogin(values, logger) {
@@ -40,7 +41,9 @@ async function handleLogin(values, logger) {
         return false
     } else {
         // props.loginFunction(data.userInfo)
-        logger(data.userInfo)
+        alert("this is working");
+        console.log(JSON.stringify(data.userInfo));
+        await logger("user", data.userInfo)
         return true
     }
 
@@ -49,6 +52,7 @@ async function handleLogin(values, logger) {
 
 export default function Login(props) {
     const router = useRouter();
+    const [cookie, setCookie] = useCookies(["user"])
 
 
     const validate = values => {
@@ -67,15 +71,33 @@ export default function Login(props) {
         return errors
     }
 
+    const saveCookie = async (data) => {
+        try {
+            setCookie("user", JSON.stringify(data), {
+                path: "/",
+                maxAge: 3600, // Expires after 1hr
+                sameSite: true,
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
     const formik = useFormik( {
             initialValues:{email: '', password:''},
             validate,
             onSubmit:async(values) => {
-                const ans = await handleLogin(values, props.loginFunction)
-                // console.log("this is ans: " + ans);
+                const ans = await handleLogin(values, saveCookie)
+                console.log("this is ans: " + ans);
                 if(ans) {
-                    props.update()
-                    router.push("/")
+                    console.log("Got here with ans " + ans);
+
+
+                    // window.location.href="http://localhost:3000"
+                    // router.push("/")
+                    // router.reload();
                 }
             }
     })

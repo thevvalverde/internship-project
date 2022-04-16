@@ -79,7 +79,7 @@ export default function Header(props) {
                         <div>
                             {getButtons()}
                         </div>
-                        {props.status ? <Auth/> : <Logoff update={props.update} logoutFunction={props.logoutFunction}/>}
+                        {props.status ?  <Logoff update={props.update} logoutFunction={props.logoutFunction}/> : <Auth/> }
                     </MyToolbar>
             </MyAppBar>
     )
