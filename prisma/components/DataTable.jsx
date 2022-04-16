@@ -107,7 +107,7 @@ function MyTableHead(props) {
 
     return (
         <TableHead sx={{width:'100%'}}>
-            <TableRow>
+            <TableRow key="header">
                 {consentHeaders.map((cell) => (
                     <TableCell sx={{backgroundColor:'secondary.light', color:'secondary.contrastText'}}
                         key={cell.id}
@@ -135,7 +135,7 @@ function MyTableHead(props) {
 }
 
 
-export default function DataTable({data, available}) {
+export default function DataTable({data}) {
     
     const [list, setList] = useState([]);
     const [order, setOrder] = useState('asc');
@@ -185,7 +185,7 @@ export default function DataTable({data, available}) {
                     <TableBody>
                         {stableSort(list, getComparator(order, orderBy))
                             .map((row, index) => (
-                                <TableRow key={row.name} >
+                                <TableRow key={row.id}>
                                     <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.id}</TableCell>
                                     <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.subject}</TableCell>
                                     <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.description}</TableCell>
@@ -203,11 +203,3 @@ export default function DataTable({data, available}) {
         )
 }
 
-
-
-
-            // <Container sx={{display:"inline",flex:3, padding:"35px"}} disableGutters>
-            //     <ul>
-            //         {list.map(item => <li>{JSON.stringify(item)}</li>)}
-            //     </ul>
-            // </Container>

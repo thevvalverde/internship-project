@@ -1,7 +1,8 @@
 
 import { Button, Container, Paper, TextField, Typography } from "@mui/material"
+import MyFilter from "../components/MyFilter"
 
-export default function Searcher({updateRef, orgRef, fetchData}) {
+export default function Searcher({updateRef, orgRef, fetchData, available}) {
     return (
         <Container sx={{ left:0, top:'12%', height:'100%'}} disableGutters>
             <Paper elevation={0} sx={{height:"97%", backgroundColor:"primary.light", padding:"2%", textAlign:"left", borderTop:"1px solid gray"}}>
@@ -13,6 +14,8 @@ export default function Searcher({updateRef, orgRef, fetchData}) {
                 <TextField sx={{width:"100%"}} onChange={updateRef} id="organization-reference" label="Organization Reference" variant="filled" value={orgRef} color="secondary"/>
 
                 <Button sx={{width:"100%", margin:"10px 0"}} variant="contained" color='info' onClick={fetchData}>Search</Button>
+
+                {available ? <MyFilter/> : null}
 
             </Paper>
         </Container>

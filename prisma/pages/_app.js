@@ -39,6 +39,18 @@ const theme = createTheme({
             dark: "#749b3d",
             contrastText: "#000000",
         }
+    },
+    components: {
+        MuiTableSortLabel : {
+            styleOverrides: {
+                root: {
+                    '&.Mui-active': {
+                        color: "#d8ff9b"
+                    }
+                },
+
+            }
+        }
     }
 })
 

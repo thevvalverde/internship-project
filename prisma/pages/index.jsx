@@ -17,6 +17,8 @@ export default function Home() {
 
     const fetchData = async () => {
         if(orgRef === "") {
+            setData([])
+            setAvailable(false)
             alert("Please, insert your organization reference!")
             return;
         }
@@ -28,14 +30,18 @@ export default function Home() {
             body: JSON.stringify(orgRef)
         })
         const consents = await response.json();
-        if(JSON.stringify(consents)==="{}") {
+        if(consents.consents.length === 0) {
             alert("No results were found!")
+            setData([])
             setAvailable(false)
             return;
         }
         setAvailable(true)
         setData(consents)
     }
+
+    
+
 
     return (
         <>
@@ -44,10 +50,10 @@ export default function Home() {
             </div>
             <div style={{display:'flex', top:'12%', position:'absolute', height:'88vh', width:'100%'}}>
                 <div style={{flex:1, height:'100%'}}>
-                    <Searcher updateRef={updateRef} orgRef={orgRef} fetchData={fetchData}/> 
+                    <Searcher updateRef={updateRef} orgRef={orgRef} fetchData={fetchData} available={available}/> 
                 </div>
                 <div style={{flex:3, height:'100%'}}>
-                    <DataTable data={data} available={available}/>
+                    <DataTable data={data}/>
                 </div>
             </div>
         </>
