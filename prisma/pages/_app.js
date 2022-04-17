@@ -41,7 +41,7 @@ const theme = createTheme({
         }
     },
     components: {
-        MuiTableSortLabel : {
+        MuiTableSortLabel: {
             styleOverrides: {
                 root: {
                     '&.Mui-active': {
@@ -50,7 +50,17 @@ const theme = createTheme({
                 },
 
             }
-        }
+        },
+        MuiFormLabel: {
+            styleOverrides: {
+                root: {
+                    color: "#1b243f",
+                    '&.Mui-focused': {
+                        color:"#1b243f"
+                    }
+                }
+            }
+        },
     }
 })
 
