@@ -6,6 +6,7 @@ export default async function (req, res) {
     const userInfo = receivedData.userInfo;
     const consentInfo = receivedData.data;
 
+    console.log(receivedData);
     // console.log("inside api:" + JSON.stringify(data));
 
     try {
@@ -59,6 +60,7 @@ export default async function (req, res) {
     } catch (error) {
         res.status(500)
         console.error("There was an error: " + error);
+        res.json({})
     }
 
 }

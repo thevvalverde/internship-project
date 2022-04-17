@@ -41,9 +41,9 @@ async function handleLogin(values, logger) {
         return false
     } else {
         // props.loginFunction(data.userInfo)
-        alert("this is working");
+        // alert("this is working");
         console.log(JSON.stringify(data.userInfo));
-        await logger("user", data.userInfo)
+        logger(data.userInfo)
         return true
     }
 
@@ -89,14 +89,14 @@ export default function Login(props) {
             initialValues:{email: '', password:''},
             validate,
             onSubmit:async(values) => {
-                const ans = await handleLogin(values, saveCookie)
+                const ans = await handleLogin(values, props.loginFunction)
                 console.log("this is ans: " + ans);
                 if(ans) {
                     console.log("Got here with ans " + ans);
 
-
+                    props.update(true)
                     // window.location.href="http://localhost:3000"
-                    // router.push("/")
+                    router.push("/")
                     // router.reload();
                 }
             }

@@ -5,7 +5,7 @@ export default function Consent({consents, formik}) {
     const builder = (individualConsent) => {
         return (
             <div key={individualConsent.id}>
-                <Checkbox name="checked" value={individualConsent.id} onChange={formik.handleChange}/>
+                <Checkbox name="checked" value={individualConsent.id} onChange={formik.handleChange} defaultChecked={individualConsent.subjectOption}/>
                 <label htmlFor={individualConsent.id}><Typography component="label" > {individualConsent.description}</Typography></label>
                 {/* <input type="checkbox" name="checked" value={individualConsent.id} onChange={formik.handleChange}/> */}
             </div>

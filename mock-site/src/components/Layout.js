@@ -5,7 +5,7 @@ import data from "./data"
 import Script from "next/script";
 import { parseCookies } from "../pages/helper";
 
-export default function Layout({data, children}) {
+export default function Layout({children}) {
 
     const [auth, setAuth] = useState(false); 
     const [token, setToken] = useState({});
@@ -23,8 +23,6 @@ export default function Layout({data, children}) {
     const passUserInfo = (userInfo) => {
         if(!iFrameRef.current)
             return;
-        // console.log("got here");
-        // alert(JSON.stringify(values, null, 2))
         const sendData = {userInfo, data}
 
         iFrameRef.current.contentWindow.postMessage(sendData, origin)
@@ -46,9 +44,9 @@ export default function Layout({data, children}) {
             </div>
             {/* <Script src="https://unpkg.com/react@18/umd/react.development.js" crossOrigin/> */}
             {/* <Script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossOrigin/> */}
-            <Script src="http://localhost:3010/script.js" type="text/babel" crossOrigin tokens={JSON.stringify(request)}/>
+            {/* <Script src="http://localhost:3010/script.js" type="text/babel" crossOrigin tokens={JSON.stringify(request)}/> */}
             {/* <script src="http;//localhost:3010/script.js" crossOrigin="true" tokens={JSON.stringify(request)}></script> */}
-            {/* <MyIframe auth={auth} ifref={iFrameRef}/> */}
+            <MyIframe auth={auth} ifref={iFrameRef}/>
         </div>
     )
 }

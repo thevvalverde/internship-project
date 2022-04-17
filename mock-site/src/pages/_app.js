@@ -14,10 +14,8 @@ export default function App({Component, pageProps}) {
     // console.log("PAGEPROPS: " + pageProps);
 
     return (
-      <CookiesProvider>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </CookiesProvider>
     )
 }
