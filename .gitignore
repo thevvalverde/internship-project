@@ -4,3 +4,4 @@ cli
 */.env
 */.git
 */.gitignore
+script/.cache
