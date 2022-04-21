@@ -1,11 +1,11 @@
-import { Box, Container, TableCell, TableHead, TableRow, TableSortLabel, Paper, TableBody, Table, TableContainer } from "@mui/material"
+import { Box, Container, TableCell, TableHead, TableRow, TableSortLabel, Paper, TableBody, Table, TableContainer, Collapse, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { visuallyHidden } from "@mui/utils"
 import superjson from "superjson"
 
 // DATA AND TABLE CREATORS
 
-function createData(id, description, option, consentDate, policy, subject, revoke, validity) {
+function createData(id, description, option, consentDate, policy, subject, revoke, validity, history) {
     return {
         id,
         description,
@@ -14,7 +14,8 @@ function createData(id, description, option, consentDate, policy, subject, revok
         policy,
         subject,
         revoke,
-        validity
+        validity,
+        history
     }
 }
 
@@ -134,6 +135,66 @@ function MyTableHead(props) {
     )
 }
 
+function MyRow({row}) {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <>
+           <TableRow sx={{'& > *': {borderBottom: 'unset'}}} onClick={() => setOpen(!open)}>
+                <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.id}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.subject}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.description}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.option}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.consentDate}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.validity}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.policy}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.revoke}</TableCell>
+           </TableRow> 
+           <TableRow sx={{backgroundColor:'secondary.main'}}>
+               <TableCell style={{paddingBottom: 0, paddinTop: 0}} colSpan={8}>
+                   <Collapse in={open} timeout="auto" unmountOnExit>
+                       <Box sx={{magin:1}}>
+                           <Typography variant="h6" gutterBottom component="div" sx={{color:"warning.dark"}}>
+                               History
+                           </Typography>
+                           <Table size="small" aria-label="consent history">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell sx={{color:'warning.light'}}>ID</TableCell>
+                                        <TableCell sx={{color:'warning.light'}}>Changed to</TableCell>
+                                        <TableCell sx={{color:'warning.light'}}>Timestamp</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {row.history.map((element) => (
+                                        <TableRow key={element.id}>
+                                            <TableCell sx={{color:'warning.light'}}>{element.id}</TableCell>
+                                            <TableCell sx={{color:'warning.light'}}>{element.changedValue}</TableCell>
+                                            <TableCell sx={{color:'warning.light'}}>{element.timestamp}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                           </Table>
+                       </Box>
+                   </Collapse>
+               </TableCell>
+           </TableRow>
+        </>
+    )
+}
+
+function parseHistory(input) {
+    let output = input.map(element => {
+        return {
+            id: element.id,
+            changedValue: (element.changedValue ? "true" : "false"),
+            timestamp: element.timestamp,
+        }
+    })
+    output.sort((a, b) => b.id - a.id)
+    return output
+}
+
 
 export default function DataTable({data}) {
     
@@ -147,6 +208,8 @@ export default function DataTable({data}) {
             rows = data.consents.map(item => {
                 let revoke = item.revokeDate === null ? "---" : new Date(item.revokeDate).toLocaleString();
                 let option = item.subjectOption ? "Agree" : "Disagree"
+                let history = (item.id in data.history ? parseHistory(data.history[item.id]) : [{id: "-", consentID:"-",changedValue:"-",timestamp:"-"}])
+            
                 let consentDate = new Date(item.consentDate).toLocaleString()
                 let validUntil = new Date(item.validUntil).toLocaleString();
                 return createData(
@@ -157,10 +220,12 @@ export default function DataTable({data}) {
                     item.policyID,
                     item.subjectId,
                     revoke,
-                    validUntil
+                    validUntil,
+                    history
                 )
             })
         }
+        console.log(rows);
         setList(rows)
     }, [data])
 
@@ -185,16 +250,7 @@ export default function DataTable({data}) {
                     <TableBody>
                         {stableSort(list, getComparator(order, orderBy))
                             .map((row, index) => (
-                                <TableRow key={row.id}>
-                                    <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.id}</TableCell>
-                                    <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.subject}</TableCell>
-                                    <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.description}</TableCell>
-                                    <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.option}</TableCell>
-                                    <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.consentDate}</TableCell>
-                                    <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.validity}</TableCell>
-                                    <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.policy}</TableCell>
-                                    <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.revoke}</TableCell>
-                                </TableRow>
+                                <MyRow key={row.id} row={row} />
                             ))}
                     </TableBody>
                 </Table>

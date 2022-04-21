@@ -62,6 +62,7 @@ export default function Home() {
             alert("No results were found!")
             return;
         }
+        console.log(consents);
         setAvailable(true)
         setData(consents)
         setBaseData(consents)

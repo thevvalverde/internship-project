@@ -29,6 +29,7 @@ export default function Widget() {
     useEffect(() => {
         window.addEventListener("message", (e) => {
             if(e.origin === "http://localhost:3000"){
+                console.log(e.data);
                 setReceivedData(e.data)
             }
         })
