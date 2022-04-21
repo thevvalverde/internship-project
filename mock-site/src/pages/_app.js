@@ -1,12 +1,7 @@
-import { Fragment } from "react";
-import Header from "../components/Header";
-import { Outlet } from "react-router-dom";
-import { styled } from "@mui/system";
-import Layout from "../components/Layout"
+import Layout from "../components/Layout";
 import "../styles/App.css";
-import "../styles/styles.css"
-import "../styles/index.css"
-import {CookiesProvider} from "react-cookie"
+import "../styles/index.css";
+import "../styles/styles.css";
 
 
 export default function App({Component, pageProps}) {
@@ -18,4 +13,10 @@ export default function App({Component, pageProps}) {
           <Component {...pageProps} />
         </Layout>
     )
+}
+
+export async function getStaticProps() {
+    return {
+        revalidate: 1,
+    }
 }

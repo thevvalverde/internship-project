@@ -6,13 +6,11 @@ import App from './App';
 
 const widgetDivs = document.querySelectorAll('.tekprivacy-widget')
 
-console.log("acutally here!");
-
 widgetDivs.forEach(div => {
   const root = ReactDOM.createRoot(div);
   root.render(
     <React.StrictMode>
-      <App id={div.dataset.userid} />
+      <App usertoken={div.dataset.usertoken} useremail={div.dataset.useremail} defaultdata={div.dataset.defaultdata} />
     </React.StrictMode>
   )
 })

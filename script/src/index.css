@@ -11,3 +11,67 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.centered {
+    text-align: center;
+}
+
+.tek-parent-div {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.main-container {
+    margin-left: 3%;
+    width: 94%;
+    display: flex;
+    background-color: #f0f8ff;
+    border: 2px solid #86C6FF;
+    border-radius: 10px;
+    position: relative;
+}
+
+.child-container {
+    flex: 1;
+    padding: 1%;
+    font-family: 'Roboto';
+}
+
+.left-child {
+    border-right: 1px solid lightgray;
+}
+
+.right-child {
+    border-left: 1px solid lightgray;
+}
+
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.open-button {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.form {
+    height: 100%;
+    margin-top: 25px;
+    margin-left: 15px;
+}
+
+.hidden {
+    display: none;
+    background-color: transparent;
+    border-width: 0;
+    border-style: none;
+}
+
+.form-submit-button {
+    text-align: right; 
+    bottom: 0;
+}

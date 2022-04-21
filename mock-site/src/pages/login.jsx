@@ -1,10 +1,8 @@
-import React, { Fragment } from "react"
-import { useFormik } from "formik"
-import { Button, TextField } from "@mui/material"
-import {Router, useRouter} from "next/router"
-import Header from "../components/Header";
-import { useCookies } from "react-cookie";
-
+import { Button, TextField } from "@mui/material";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import React from "react";
+import cookie from "js-cookie"
 
 async function handleLogin(values, logger) {
 
@@ -40,9 +38,6 @@ async function handleLogin(values, logger) {
         alert("An unexpected error ocurred")
         return false
     } else {
-        // props.loginFunction(data.userInfo)
-        // alert("this is working");
-        console.log(JSON.stringify(data.userInfo));
         logger(data.userInfo)
         return true
     }
@@ -50,10 +45,8 @@ async function handleLogin(values, logger) {
 
 }
 
-export default function Login(props) {
-    const router = useRouter();
-    const [cookie, setCookie] = useCookies(["user"])
-
+export default function Login({loginFunction}) {
+    // const router = useRouter();
 
     const validate = values => {
         const errors = {}
@@ -71,34 +64,15 @@ export default function Login(props) {
         return errors
     }
 
-    const saveCookie = async (data) => {
-        try {
-            setCookie("user", JSON.stringify(data), {
-                path: "/",
-                maxAge: 3600, // Expires after 1hr
-                sameSite: true,
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-
-
     const formik = useFormik( {
             initialValues:{email: '', password:''},
             validate,
-            onSubmit:async(values) => {
-                const ans = await handleLogin(values, props.loginFunction)
-                console.log("this is ans: " + ans);
-                if(ans) {
-                    console.log("Got here with ans " + ans);
-
-                    props.update(true)
-                    // window.location.href="http://localhost:3000"
-                    router.push("/")
-                    // router.reload();
-                }
+            onSubmit: async (values) => {
+                const ans = await handleLogin(values, loginFunction)
+                // if(ans) {
+                //     // router.push("/")
+                //     // router.reload();
+                // }
             }
     })
 
