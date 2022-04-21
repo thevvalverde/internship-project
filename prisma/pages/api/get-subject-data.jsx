@@ -1,23 +1,44 @@
 import prisma from "../../prisma/client"
+import Cors from "cors"
+
+const cors = Cors({
+    origin: true,
+    methods: ['GET', 'POST']
+})
+
+function runMiddleware(req, res, f) {
+    return new Promise((resolve, reject) => {
+        f(req, res, (result) => {
+            if (result instanceof Error) {
+                return reject(result)
+            }
+            return resolve(result)
+        })
+    })
+}
 
 export default async function (req, res) {
 
+    await runMiddleware(req, res, cors)
+
     const receivedData = req.body;
-    const userInfo = receivedData.userInfo;
-    const consentInfo = receivedData.data;
+    const userToken = parseInt(receivedData.usertoken);
+    const userEmail = receivedData.useremail;
+    const consentInfo = receivedData.defaultdata;
 
     console.log(receivedData);
+    console.log(userEmail);
     // console.log("inside api:" + JSON.stringify(data));
 
     try {
-        let user = await prisma.client.findFirst({where:{email: userInfo.email}})
+        let user = await prisma.client.findFirst({where:{email: userEmail}})
         let consents = [];
         let policy = {};
         if(user===null) {
             consents = consentInfo.defaultConsents
             user = await prisma.client.create({
                 data: {
-                    email: userInfo.email
+                    email: userEmail
                 }
             })
             policy = await prisma.policy.create({

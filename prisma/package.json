@@ -30,6 +30,7 @@
     "@mui/material": "^5.5.2",
     "@prisma/client": "^3.11.0",
     "babel-plugin-superjson-next": "^0.4.3",
+    "cors": "^2.8.5",
     "formik": "^2.2.9",
     "next": "^12.1.0",
     "react": "^17.0.2",
