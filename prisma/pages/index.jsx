@@ -54,7 +54,7 @@ export default function Home() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(orgRef)
+            body: JSON.stringify({orgRef: orgRef})
         })
         const consents = await response.json();
         if(consents.consents.length === 0) {
@@ -80,7 +80,7 @@ export default function Home() {
         if(baseData.consents === undefined || baseData.consents.length === 0) {
             return;
         }
-        const newList = {}
+        const newList = {users: baseData.users}
         newList.consents = baseData.consents.filter(e => {
             if(sub == 0) {
                 if(opt == 0) {

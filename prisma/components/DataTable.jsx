@@ -28,8 +28,8 @@ const consentHeaders = [
     },
     {
         id: 'subject',
-        numeric: true,
-        disablePadding: true,
+        numeric: false,
+        disablePadding: false,
         label: 'Subject ID',
     },  
     {
@@ -142,7 +142,7 @@ function MyRow({row}) {
         <>
            <TableRow sx={{'& > *': {borderBottom: 'unset'}}} onClick={() => setOpen(!open)}>
                 <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.id}</TableCell>
-                <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.subject}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.subject}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.description}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.option}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.consentDate}</TableCell>
@@ -218,7 +218,7 @@ export default function DataTable({data}) {
                     option,
                     consentDate,
                     item.policyID,
-                    item.subjectId,
+                    (`${item.subjectId} - ${data.users[item.subjectId]}`),
                     revoke,
                     validUntil,
                     history

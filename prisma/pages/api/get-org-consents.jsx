@@ -2,7 +2,7 @@ import prisma from "../../prisma/client"
 
 export default async function (req, res) {
 
-    const orgRef = parseInt(req.body);
+    const orgRef = parseInt(req.body.orgRef);
 
     try {
         let consents = await prisma.consent.findMany({
@@ -30,8 +30,12 @@ export default async function (req, res) {
             })
         })
 
+        let users = await prisma.client.findMany()
+
+        users = users.reduce((l, c) => ({...l, [c.id]:c.email}), {})
+
         res.status(200)
-        res.json({consents, history})
+        res.json({consents, history, users})
     } catch (error) {
         res.status(500)
         console.error("There was an error: " + error);
