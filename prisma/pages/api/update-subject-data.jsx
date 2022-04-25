@@ -21,12 +21,10 @@ export default async function (req, res) {
 
     await runMiddleware(req, res, cors)
 
-    const {allConsents, givenConsents, userInfo} = req.body
-
-    const notConsented = allConsents.filter(v => !givenConsents.includes(v))
+    const {revokedConsents, givenConsents, userInfo} = req.body
 
     try {
-        notConsented.map(async c => {
+        revokedConsents.map(async c => {
             const oldConsent = await prisma.consent.findUnique({
                 where: {
                     id: c

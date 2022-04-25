@@ -22,7 +22,7 @@ export default async function (req, res) {
     await runMiddleware(req, res, cors)
 
     const receivedData = req.body;
-    console.log(receivedData);
+    // console.log(receivedData);
     const userEmail = receivedData.userEmail;
     const orgRef = receivedData.orgRef;
     let user = null;
@@ -46,8 +46,8 @@ export default async function (req, res) {
                 orgReference: orgRef
             }
         })
-        console.log("Got consents:");
-        console.log(consents);
+        // console.log("Got consents:");
+        // console.log(consents);
 
         if(consents.length === 0) {
             console.log("Consent length 0");

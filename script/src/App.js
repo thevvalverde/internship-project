@@ -9,6 +9,7 @@ import './App.css';
 import './index.css'
 import { FieldArray } from 'formik';
 import { Formik } from 'formik';
+import { Field } from 'formik';
 
 function App({useremail, orgref}) {
 
@@ -47,24 +48,38 @@ function App({useremail, orgref}) {
               body: JSON.stringify(receivedData)
             })
             const data = await response.json()
+            console.log(data);
 
             setUserInfo(data.user)
             setConsents(data.consents)
             setCheckConsents(data.consents.map(consent => ({"value": consent.id, "description": consent.description})))
             setPolicy(data.policy)
             setVisible(true)
+            console.log(consents);
+            console.log(checkConsents);
           }
           fetchData()          
         }, [receivedData])
 
         const formik = useFormik({
-          initialValues: {consentList: checkConsents},
+          initialValues: {},
           onSubmit: async (values) => {
-            alert(JSON.stringify(values, null, 2))
-            const allConsents = consents.map(c => c.id)
-            const givenConsents = values.checked.map(c => parseInt(c))
+            if(JSON.stringify(values) === '{}') {
+                alert("Saved.")
+                setVisible(false) 
+                return;
+            }
+            let givenConsents = [];
+            let revokedConsents = [];
+            for(var id in values) {
+                if(values[id].length===0) {
+                    revokedConsents.push(parseInt(id))
+                } else {
+                    givenConsents.push(parseInt(id))
+                }
+            }
             
-            const data = {allConsents, givenConsents, userInfo}
+            const data = {revokedConsents, givenConsents, userInfo}
             
             setVisible(false) 
 
@@ -76,7 +91,7 @@ function App({useremail, orgref}) {
                 body: JSON.stringify(data)
             })
             const responseJson = await response.json()
-            // alert(JSON.stringify(responseJson, null, 2))
+            alert(JSON.stringify(responseJson, null, 2))
         },
     })
 
@@ -89,34 +104,18 @@ function App({useremail, orgref}) {
                             {policy.policy || ""}
                         </Typography>
                     </div>
+
                     <div className="separator"></div>
+
                     <div className={visible ? "child-container right-child" : "hidden"}>
-                    <Formik
-                        initialValues={{consents: checkConsents}}
-                        onSubmit={values => alert(JSON.stringify(values,null,2))}>
-                        {({errors, values, touched, setValues}) => (
-                            <Form>
-                                <FieldArray name="consents">
-                                    {() => (values.consents.map((consent, i) => {
-                                        return (
-                                            <div key={i}>
-                                                <label>{consent.description}</label>
-                                                {/* <Field name={`consents.${i}.value`} type="checkbox"/> */}
-                                            </div>
-                                        )
-                                    }))}
-                                </FieldArray>
-                            </Form>
-                        )}
-                    </Formik>
-              
-                        {/* <form onSubmit={formik.handleSubmit} className="form">
-                            <Consent consents={consents} formik={formik} />
-                            <div className={receivedData.usertoken === "0" ? "hidden" : "form-submit-button"}>
-                                <Button variant="contained" type="submit">Submit</Button>
-                            </div>
-                        </form> */}
+                    <form onSubmit={formik.handleSubmit} className="form">
+                        <Consent consents={consents} formik={formik}/>
+                        <div className={receivedData.usertoken === "0" ? "hidden" : "form-submit-button"}>
+                            <Button variant="contained" type="submit">Submit</Button>
+                        </div>
+                    </form>
                     </div>
+
                     <div className="close-button">
                         <Button aria-label="Close" size="large" onClick={collapse} >
                             <ExpandMore/>
