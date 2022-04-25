@@ -22,60 +22,64 @@ export default async function (req, res) {
     await runMiddleware(req, res, cors)
 
     const receivedData = req.body;
-    const userToken = parseInt(receivedData.usertoken);
-    const userEmail = receivedData.useremail;
-    const consentInfo = receivedData.defaultdata;
-
     console.log(receivedData);
-    console.log(userEmail);
-    // console.log("inside api:" + JSON.stringify(data));
+    const userEmail = receivedData.userEmail;
+    const orgRef = receivedData.orgRef;
+    let user = null;
+    let consents = [];
+    let policy = {};
 
     try {
-        let user = await prisma.client.findFirst({where:{email: userEmail}})
-        let consents = [];
-        let policy = {};
-        if(user===null) {
-            consents = consentInfo.defaultConsents
+        user = await prisma.client.findFirst({where:{email: userEmail}});
+
+        if(!user) {
             user = await prisma.client.create({
                 data: {
                     email: userEmail
                 }
             })
-            policy = await prisma.policy.create({
-                data: {
-                    policy: consentInfo.defaultPolicy,
-                }
+        }
+
+        consents = await prisma.consent.findMany({
+            where: {
+                subjectId: user.id,
+                orgReference: orgRef
+            }
+        })
+        console.log("Got consents:");
+        console.log(consents);
+
+        if(consents.length === 0) {
+            console.log("Consent length 0");
+            const response = await fetch('http://localhost:3030/api/get-default-consents', { // Fetch default consents data for this organization
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ orgRef: orgRef })
             })
-            consents.map(async(consent) => {
-                await prisma.consent.create({
+            const {defaultPolicy, defaultConsents} = await response.json()
+
+            policy = await prisma.policy.create({ data: { policy: defaultPolicy }})
+            let consentPromises = defaultConsents.map(async(consent) => {
+                return await prisma.consent.create({
                     data: {
-                        ...consent, 
-                        policy: {
-                            connect: { id: policy.id }
-                        },
-                        organization: {
-                            connect: { id: consentInfo.organizationID }
-                        },
-                        subject: {
-                            connect: { id: user.id }
-                        }
+                        ...consent,
+                        policyID: policy.id,
+                        orgReference: orgRef,
+                        subjectId: user.id,
                     }
                 })
             })
-
+            consents = await Promise.all(consentPromises)
         } else {
-            consents = await prisma.consent.findMany({
-                where: {
-                    subjectId: user.id,
-                    orgReference: consentInfo.organizationID
-                }
-            })
             policy = await prisma.policy.findUnique({
                 where: {
-                    id: consents[0].policyID
+                    id: consents[0].policyID,
                 }
             })
         }
+
         res.status(200)
         res.json({user, consents, policy})
     } catch (error) {

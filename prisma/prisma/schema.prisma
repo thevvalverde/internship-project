@@ -11,44 +11,53 @@ datasource db {
 }
 
 model client {
-  id        Int  @default(autoincrement()) @id 
-  email     String @unique
-  consent   consent[]
+  id      Int       @id @default(autoincrement())
+  email   String    @unique
+  consent consent[]
 }
 
 model consent {
-  id              Int              @default(autoincrement()) @id
-  description     String
-  subjectOption   Boolean
-  consentDate     DateTime         @default(now()) @updatedAt
-  policy          policy           @relation(fields: [policyID], references: [id])
-  policyID        Int
-  organization    organization     @relation(fields: [orgReference], references: [id])
-  orgReference    Int
-  subject         client           @relation(fields: [subjectId], references: [id])
-  subjectId       Int
-  revokeDate      DateTime?        
-  validUntil      DateTime
-  consentHistory  consentHistory[]
+  id             Int              @id @default(autoincrement())
+  description    String
+  subjectOption  Boolean
+  consentDate    DateTime         @default(now()) @updatedAt
+  policy         policy           @relation(fields: [policyID], references: [id])
+  policyID       Int
+  organization   organization     @relation(fields: [orgReference], references: [id])
+  orgReference   Int
+  subject        client           @relation(fields: [subjectId], references: [id])
+  subjectId      Int
+  revokeDate     DateTime?
+  validUntil     DateTime
+  consentHistory consentHistory[]
 }
 
 model policy {
-  id        Int       @default(autoincrement()) @id 
-  policy    String
-  consent   consent[]
+  id      Int       @id @default(autoincrement())
+  policy  String
+  consent consent[]
 }
 
 model organization {
-  id              Int        @default(autoincrement()) @id
-  contactPhone    String
-  contactEmail    String
-  consent         consent[]
+  id           Int           @id @default(autoincrement())
+  contactPhone String
+  contactEmail String
+  consent      consent[]
+  defaultData  defaultData[]
 }
 
 model consentHistory {
-  id           Int      @default(autoincrement()) @id 
+  id           Int      @id @default(autoincrement())
   consent      consent  @relation(fields: [consentID], references: [id])
   consentID    Int
   changedValue Boolean
   timestamp    DateTime @default(now())
+}
+
+model defaultData {
+  id              Int          @id @default(autoincrement())
+  orgReference    Int
+  organization    organization @relation(fields: [orgReference], references: [id])
+  defaultPolicy   String
+  defaultConsents String[]
 }

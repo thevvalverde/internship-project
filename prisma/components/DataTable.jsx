@@ -208,7 +208,7 @@ export default function DataTable({data}) {
             rows = data.consents.map(item => {
                 let revoke = item.revokeDate === null ? "---" : new Date(item.revokeDate).toLocaleString();
                 let option = item.subjectOption ? "Agree" : "Disagree"
-                let history = (item.id in data.history ? parseHistory(data.history[item.id]) : [{id: "-", consentID:"-",changedValue:"-",timestamp:"-"}])
+                let history = (data.history !== undefined && item.id in data.history ? parseHistory(data.history[item.id]) : [{id: "-", consentID:"-",changedValue:"-",timestamp:"-"}])
             
                 let consentDate = new Date(item.consentDate).toLocaleString()
                 let validUntil = new Date(item.validUntil).toLocaleString();
@@ -225,7 +225,6 @@ export default function DataTable({data}) {
                 )
             })
         }
-        console.log(rows);
         setList(rows)
     }, [data])
 

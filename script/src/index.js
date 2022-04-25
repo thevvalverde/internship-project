@@ -10,7 +10,7 @@ widgetDivs.forEach(div => {
   const root = ReactDOM.createRoot(div);
   root.render(
     <React.StrictMode>
-      <App usertoken={div.dataset.usertoken} useremail={div.dataset.useremail} defaultdata={div.dataset.defaultdata} />
+      <App useremail={div.dataset.useremail} orgref={div.dataset.orgref} />
     </React.StrictMode>
   )
 })

@@ -19,7 +19,6 @@ export default async function (req, res) {
                     consentID : consent.id
                 }
             })
-            // console.log(h);
             return h
         })
 
@@ -30,9 +29,6 @@ export default async function (req, res) {
                 }
             })
         })
-
-        console.log(history);
-        // console.log(consents);
 
         res.status(200)
         res.json({consents, history})

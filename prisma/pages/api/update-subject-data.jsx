@@ -33,7 +33,6 @@ export default async function (req, res) {
                 }
             })
             const changeToFalse = (oldConsent !== null && oldConsent.subjectOption)
-            // console.log("change to false in " + c + ": " + changeToFalse);
             const updated = await prisma.consent.update({
                 where: {
                     id: c,
@@ -51,9 +50,7 @@ export default async function (req, res) {
                         changedValue: false
                     }
                 })
-                // console.log("created history -> " + history.id + " for consent " + c);
             }
-                // console.log("falseUpdate -> " + updated.id)
         })
 
         givenConsents.map(async c => {
@@ -63,7 +60,6 @@ export default async function (req, res) {
                 }
             })
             const changeToTrue = (oldConsent !== null && !oldConsent.subjectOption)
-            // console.log("change to true in " + c + ": " + changeToTrue);
             const updated = await prisma.consent.update({
                 where: {
                     id: c,
@@ -81,9 +77,7 @@ export default async function (req, res) {
                         changedValue: true
                     }
                 })
-                // console.log("created history -> " + history.id + " for consent " + c);
             }
-            // console.log("trueUpdate -> " + updated.id)
         })
 
         

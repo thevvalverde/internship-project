@@ -19,12 +19,10 @@ const loadJs = () => {
 const loadDiv = () => {
     const div = document.createElement('div')
     div.id = "tek-div"
-    let utoken = (document.getElementById('tek-script').dataset.usertoken);
     let uemail = (document.getElementById('tek-script').dataset.useremail);
-    let ddata = (document.getElementById('tek-script').dataset.defaultdata);
-    div.dataset.usertoken = utoken
+    let orgref = (document.getElementById('tek-script').dataset.orgref);
     div.dataset.useremail = uemail
-    div.dataset.defaultdata = ddata
+    div.dataset.orgref = orgref
     div.classList.add('tekprivacy-widget')
     document.body.appendChild(div)
     div.onload = () => {
