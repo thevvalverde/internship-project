@@ -238,23 +238,23 @@ export default function DataTable({data}) {
 
     return (
             <Paper sx={{width:'100%', height:'100%'}}>
-            <TableContainer sx={{height:'100%', width:'100%', backgroundColor:'secondary.main'}}>
+                <TableContainer sx={{height:'100%', width:'100%', backgroundColor:'secondary.main'}}>
 
-                <Table stickyHeader sx={{backgroundColor:'secondary.light'}}>
-                    <MyTableHead 
-                        order={order}
-                        orderBy={orderBy}
-                        onRequestSort={handleRequestSort}
-                        rowCount={list.length}
-                    />
-                    <TableBody>
-                        {stableSort(list, getComparator(order, orderBy))
-                            .map((row, index) => (
-                                <MyRow key={row.id} row={row} />
-                            ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                    <Table stickyHeader sx={{backgroundColor:'secondary.light'}}>
+                        <MyTableHead 
+                            order={order}
+                            orderBy={orderBy}
+                            onRequestSort={handleRequestSort}
+                            rowCount={list.length}
+                        />
+                        <TableBody>
+                            {stableSort(list, getComparator(order, orderBy))
+                                .map((row, index) => (
+                                    <MyRow key={row.id} row={row} />
+                                ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Paper>
         )
 }
