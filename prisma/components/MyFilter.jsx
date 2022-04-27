@@ -22,7 +22,7 @@ export default function MyFilter({subjects, sub, handleSetSub, opt, handleSetOpt
                 >
                     <MenuItem value={0}>None</MenuItem>
                     {subjects.map((element) => (
-                        <MenuItem value={element}>{element}</MenuItem>
+                        <MenuItem value={element.id}>{element.email}</MenuItem>
                     ))}
                 </Select>
                 <br/>

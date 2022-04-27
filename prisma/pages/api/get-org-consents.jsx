@@ -11,6 +11,9 @@ export default async function (req, res) {
             }
         })
 
+        let registeredUsers = new Set()
+        consents.map(e => registeredUsers.add(e.subjectId))
+
         let history = {}
 
         let array = consents.map(async(consent) => {
@@ -30,7 +33,13 @@ export default async function (req, res) {
             })
         })
 
-        let users = await prisma.client.findMany()
+        let uarray = [];
+        for(let k of registeredUsers) {
+            console.log(k);
+            let u = prisma.client.findFirst({where: {id: k}})
+            uarray.push(u);
+        }
+        let users = await Promise.all(uarray)
 
         users = users.reduce((l, c) => ({...l, [c.id]:c.email}), {})
 

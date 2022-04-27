@@ -62,7 +62,6 @@ export default function Home() {
             alert("No results were found!")
             return;
         }
-        console.log(consents);
         setAvailable(true)
         setData(consents)
         setBaseData(consents)
@@ -72,15 +71,27 @@ export default function Home() {
         if(baseData.consents === undefined || baseData.consents.length === 0) {
             return;
         }
-        const subs = baseData.consents.map(e => e.subjectId).filter(filterUnique).sort((a,b) => a-b);
+        const subs = []
+        for(const k in baseData.users) {
+            subs.push({id: k, email: baseData.users[k]});
+        }
+        subs.sort((a, b) => {
+            if(a.email > b.email) {
+                return 1;
+            }
+            if(a.email < b.email) {
+                return -1;
+            }
+            return 0;
+        })
         setSubjects(subs)
-    }, [baseData])
+    }, [baseData, data])
 
     useEffect(() => {
         if(baseData.consents === undefined || baseData.consents.length === 0) {
             return;
         }
-        const newList = {users: baseData.users}
+        const newList = {history: baseData.history, users: {}}
         newList.consents = baseData.consents.filter(e => {
             if(sub == 0) {
                 if(opt == 0) {
@@ -92,13 +103,18 @@ export default function Home() {
                 return !e.subjectOption
             }
             if(opt == 0) {
-                return e.subjectId === sub;
+                return e.subjectId === parseInt(sub);
             }
             if(opt == 1) {
-                return e.subjectId === sub && e.subjectOption;
+                return e.subjectId === parseInt(sub) && e.subjectOption;
             }
-            return e.subjectId === sub && !e.subjectOption;
+            return e.subjectId === parseInt(sub) && !e.subjectOption;
         })
+        for(const k in baseData.users) {
+            if(sub === 0 || sub === k) {
+                newList.users[k] = baseData.users[k];
+            }
+        }
         setData(newList)
     }, [sub, opt])
 
