@@ -1,6 +1,7 @@
 import Header from "../components/Header"
 import MySelect from "../components/MySelect"
 import OrgInfo from "../components/OrgInfo"
+import NewOrg from "../components/NewOrg"
 import { Paper } from "@mui/material"
 import { useState } from "react"
 import { useEffect } from "react"
@@ -8,9 +9,25 @@ import { useEffect } from "react"
 export default function Editor({data}) {
     const [org, setOrg] = useState(0)
     const [orgInfo, setOrgInfo] = useState({})
+    const [orgs, setOrgs] = useState(data.organizations)
 
     const handleSetOrg = (event) => {
         setOrg(event.target.value);
+    }
+
+    const createNewOrg = () => {
+        setOrg(-1)
+    }
+
+    const finishCreation = (id) => {
+        setOrg(id)
+    }
+
+    const updateOrgs = async() => {
+        const res = await fetch('/api/get-org-defaults')
+        const data = await res.json()
+        setOrgs(data.organizations)
+
     }
 
     useEffect(async () => {
@@ -32,10 +49,10 @@ export default function Editor({data}) {
             </div>
             <div style={{display:'flex', top:'12%', position:'absolute', height:'88vh', width:'100%'}}>
                 <div style={{flex:1, height:'100%'}}>
-                    <MySelect organizations={data.organizations} value={org} setter={handleSetOrg} />
+                    <MySelect organizations={orgs} value={org} setter={handleSetOrg} creator={createNewOrg}/>
                 </div>
                 <div style={{flex:3, overflow:'auto', padding:'3%'}}>
-                    <OrgInfo org={orgInfo}/>
+                    {org !== -1 ? <OrgInfo org={orgInfo}/> : <NewOrg finish={finishCreation} update={updateOrgs}/>}
                 </div>
             </div>
         </Paper>

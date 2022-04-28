@@ -19,7 +19,7 @@ export default async function(req, res) {
 
         const oldDefault = await prisma.defaultData.findFirst({
             where: {
-                orgReference: orgRef
+                orgReference: upsertOrg.id
             }
         })
 
@@ -28,11 +28,11 @@ export default async function(req, res) {
                 id: (oldDefault ? oldDefault.id : -1)
             },
             update: newDefaultData,
-            create: {orgReference: orgRef, ...newDefaultData}
+            create: {orgReference: upsertOrg.id , ...newDefaultData}
         })
         
         res.status(200)
-        res.json({})
+        res.json({upsertOrg})
     } catch (error) {
         res.status(500) 
         console.error(error);

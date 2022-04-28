@@ -6,28 +6,14 @@ import { useState, useEffect } from "react"
 import MyTextField from "./MyTextField"
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 
-export default function OrgInfo({org}) {
-
-    const {defaultPolicy, defaultConsents, orgInfo} = org
+export default function NewOrg({finish, update}) {
 
     const [name, setName] = useState("")
-    const [id, setId] = useState("")
+    const [id, setId] = useState("The ID will be automatically generated after the organization is created.")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [policy, setPolicy] = useState("")
-    const [consents, setConsents] = useState([])
-
-    useEffect(() => {
-        if(!orgInfo || orgInfo === 0) {
-            return
-        }
-        setName(orgInfo.name)
-        setId(orgInfo.id)
-        setPhone(orgInfo.contactPhone)
-        setEmail(orgInfo.contactEmail)
-        setPolicy(defaultPolicy)
-        setConsents(defaultConsents)
-    }, [org])
+    const [consents, setConsents] = useState([{description: "", subjectOption: false, validUntil: ""}])
 
     const handleSetName = (event) => {
         setName(event.target.value)
@@ -74,7 +60,7 @@ export default function OrgInfo({org}) {
                 defaultConsents: newConsents,
                 defaultPolicy: policy
             },
-            orgRef: id,
+            orgRef: -1,
             orgUpdate: {
                 name: name,
                 contactEmail: email,
@@ -92,12 +78,12 @@ export default function OrgInfo({org}) {
             body: JSON.stringify(data)
         })
         const jsonResponse = await response.json()
+        finish(jsonResponse.upsertOrg.id)
+        update()
     }
 
     return (
         <Container disableGutters >
-            {orgInfo ? (
-                <>
                     <MyTextField content={name} handler={handleSetName} label="Organization Name" readonly={false} />
                     <MyTextField content={id} label="Organization ID" readonly={true} fw/>
                     <div style={{position:"relative", display:"flex"}}>
@@ -128,9 +114,6 @@ export default function OrgInfo({org}) {
                     })}
                     <Button variant="outlined" aria-label="add" color="success" sx={{width:'93%', marginTop:1}} onClick={addConsent}>+</Button>
                     <Button variant="contained" aria-label="save" color="warning" sx={{width:'15%', float:'right', marginTop:3}} onClick={saveChanges} >Save Changes</Button>
-                </>
-            )
-            : null}
         </Container>
     )
 }
