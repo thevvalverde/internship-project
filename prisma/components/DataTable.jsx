@@ -170,7 +170,7 @@ function MyRow({row}) {
                                         <TableRow key={element.id}>
                                             <TableCell sx={{color:'warning.light'}}>{element.id}</TableCell>
                                             <TableCell sx={{color:'warning.light'}}>{element.changedValue}</TableCell>
-                                            <TableCell sx={{color:'warning.light'}}>{new Date(element.timestamp).toLocaleString()}</TableCell>
+                                            <TableCell sx={{color:'warning.light'}}>{element.timestamp === "-"  ? "-" : new Date(element.timestamp).toLocaleString()}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
