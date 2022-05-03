@@ -11,6 +11,35 @@ import { FieldArray } from 'formik';
 import { Formik } from 'formik';
 import { Field } from 'formik';
 
+
+function containsObject(obj, list) {
+    for(let i = 0; i < list.length; i++) {
+        if(obj.description === list[i].description) {
+            return true;
+        }
+    }
+    return false;
+}   
+
+function compareVersions(given, def) {
+    let ans = [];
+    let added = [];
+    let removed = [];
+    for(const element of given) {
+        if(containsObject(element, def)) {
+            ans.push(element);
+        } else {
+            removed.push(element);
+        }
+    }
+    for(const element of def) {
+        if(!containsObject(element, given)) {
+            added.push(element);
+        }
+    }
+    return {ready: ans, toCreate: added, toRemove: removed}
+}
+
 function App({useremail, orgref}) {
 
     const [receivedData, setReceivedData] = useState({userEmail: useremail, orgRef: parseInt(orgref)})
@@ -32,31 +61,59 @@ function App({useremail, orgref}) {
 
     useEffect(() => {
       async function fetchData() {
-          if(receivedData.userEmail === "") {
-            setUserInfo({})            
-            setConsents([])
-            setCheckConsents([])
-            setPolicy({})
-            setVisible(false)
-            return
-          }
-          const response = await fetch('http://localhost:3030/api/get-subject-data', {
-            method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify(receivedData)
+            if(receivedData.userEmail === "") {
+                setUserInfo({})            
+                setConsents([])
+                setCheckConsents([])
+                setPolicy({})
+                setVisible(false)
+                return
+            }
+            const response = await fetch('http://localhost:3030/api/get-subject-data', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(receivedData)
             })
             const data = await response.json()
             console.log(data);
 
+            const defaults = await fetch('http://localhost:3030/api/get-default-consents', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({orgRef: receivedData.orgRef})
+            })
+            const defdata = await defaults.json()
+
+            console.log(defdata.defaultConsents);
+
+            let {ready, toCreate, toRemove} = compareVersions(data.consents, defdata.defaultConsents)
+
+            const created = await fetch('http://localhost:3030/api/create-new-consents', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({toCreate: toCreate, orgRef: receivedData.orgRef, data: {user: data.user, policy: data.policy}})
+            })
+            const createRes = await created.json()
+
+            const finalConsentList = [...ready, ...createRes];
+
             setUserInfo(data.user)
-            setConsents(data.consents)
-            setCheckConsents(data.consents.map(consent => ({"value": consent.id, "description": consent.description})))
+            setConsents(finalConsentList)
+            setCheckConsents(finalConsentList.map(consent => ({"value": consent.id, "description": consent.description})))
             setPolicy(data.policy)
             setVisible(true)
-            console.log(consents);
-            console.log(checkConsents);
+
+
+            // TODO
+            // See if consents removed from back-office should be deleted from database
+            // const removed = await fetch('http://localhost:3030/api')
+
           }
           fetchData()          
         }, [receivedData])

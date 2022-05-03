@@ -65,10 +65,17 @@ export default function OrgInfo({org}) {
 
     const saveChanges = async() => {
         let newConsents = consents.filter(v => (v.description!==""));
+        newConsents = newConsents.map(c => {
+            if(c.validUntil === '') {
+                return {...c, validUntil: (new Date('2029-02-28'))}
+            } 
+            return c
+        })
         if(newConsents.length === 0 || policy === "" || name === "") {
             alert("Please fill all the fields")
             return;
         }
+        
         let data = {
             newDefaultData: {
                 defaultConsents: newConsents,
