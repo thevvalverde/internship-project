@@ -7,6 +7,9 @@ import More from "../pages/see-more";
 import Auth from "./Auth";
 import Logoff from "./Logoff"
 import Link from "next/link";
+import { FormControl } from "@mui/material";
+import { Select } from "@mui/material";
+import { MenuItem } from "@mui/material";
 // import "../styles/styles.css"
 
 const MyAppBar = styled(AppBar)({
@@ -58,6 +61,15 @@ let auth = false;
 
 
 export default function Header(props) {
+
+    const [orgs, setOrgs] = useState([])
+
+    useEffect(async() => {
+        const res = await fetch('http://localhost:3030/api/get-org-defaults')
+        const data = await res.json()
+        setOrgs(data.organizations)
+    }, [])
+
     const getButtons = () => {
         return headerData.map(({label, href})=> {
             return (
@@ -74,9 +86,21 @@ export default function Header(props) {
             <MyAppBar>
                     <MyToolbar>
                         <MyTypography variant="h2" component="h1">
-                            <Link href="/"><a className="logo">eXample</a></Link>
+                            <Link href="/"><a className="logo">eXample {props.org}</a></Link>
                         </MyTypography>
                         <div>
+                            <FormControl>
+                                <Select
+                                    id="org-select"
+                                    value={props.org}
+                                    label="Org"
+                                    onChange={props.setOrg}
+                                >
+                                    {orgs.map(o => (
+                                        <MenuItem key={o.id} value={o.id}>{o.id}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                             {getButtons()}
                         </div>
                         {props.status ?  <Logoff update={props.update} logoutFunction={props.logoutFunction}/> : <Auth/> }

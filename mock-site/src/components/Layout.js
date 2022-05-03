@@ -8,8 +8,10 @@ export default function Layout({children}) {
 
     let userToken = cookie.get("token")
     let userEmail = cookie.get("email")
+    let orgRef = cookie.get("org")
 
     const [auth, setAuth] = useState(userToken != undefined); 
+    const [org, setOrg] = useState((orgRef == undefined ? 2 : orgRef))
     
     function ChildComponent({children}) {
         return (
@@ -30,13 +32,18 @@ export default function Layout({children}) {
         window.location.href="http://localhost:3000"
     }
 
+    const handleSetOrg = (e) => {
+        cookie.set("org", e.target.value)
+        setOrg(e.target.value)
+    }
+
     return (
         <div>
-            <Header status={auth} update={setAuth} logoutFunction={removeUserInfo}/>
+            <Header status={auth} update={setAuth} logoutFunction={removeUserInfo} org={org} setOrg={handleSetOrg}/>
             <div className="main-body centered" id="root">
                 {ChildComponent({children})}
             </div>
-            <Script src="http://localhost:3030/mainscript.js" crossOrigin data-useremail={userEmail == undefined ? "" : userEmail} data-orgref={2} id="tek-script"/>
+            <Script src="http://localhost:3030/mainscript.js" crossOrigin data-useremail={userEmail == undefined ? "" : userEmail} data-orgref={org} id="tek-script"/>
         </div>
     )
 }

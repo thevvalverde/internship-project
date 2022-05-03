@@ -46,8 +46,6 @@ export default async function (req, res) {
                 orgReference: orgRef
             }
         })
-        // console.log("Got consents:");
-        // console.log(consents);
 
         if(consents.length === 0) {
             console.log("Consent length 0");
@@ -80,6 +78,8 @@ export default async function (req, res) {
             })
         }
 
+        console.log("Get-subject-data");
+        console.log({user, consents, policy});
         res.status(200)
         res.json({user, consents, policy})
     } catch (error) {
