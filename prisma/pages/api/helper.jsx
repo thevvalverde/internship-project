@@ -1,5 +1,7 @@
 import Cors from "cors"
 
+// Allow cross origin API requests
+
 const cors = Cors({
     origin: true,
     methods: ['GET', 'POST']
