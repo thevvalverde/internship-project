@@ -6,17 +6,9 @@ import "../styles/styles.css";
 
 export default function App({Component, pageProps}) {
 
-    // console.log("PAGEPROPS: " + pageProps);
-
     return (
         <Layout>
           <Component {...pageProps} />
         </Layout>
     )
-}
-
-export async function getStaticProps() {
-    return {
-        revalidate: 1,
-    }
 }

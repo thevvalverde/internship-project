@@ -54,7 +54,9 @@ export default function Home() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({orgRef: orgRef})
+            body: JSON.stringify({
+                orgRef: orgRef
+            })
         })
         const consents = await response.json();
         if(consents.consents.length === 0) {

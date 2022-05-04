@@ -205,7 +205,6 @@ export default function DataTable({data}) {
     useEffect(() => {
         let rows = []
         if(data.consents!==undefined) {
-            // console.log(data);
             rows = data.consents.map(item => {
                 let revoke = item.revokeDate === null ? "---" : new Date(item.revokeDate).toLocaleString();
                 let option = item.subjectOption ? "Agree" : "Disagree"

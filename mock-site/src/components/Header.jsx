@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { AppBar, Button, Toolbar, Typography } from "@mui/material"
-import { style, styled } from "@mui/system";
-import About from "../pages/about-us";
-import Contact from "../pages/contact";
-import More from "../pages/see-more";
-import Auth from "./Auth";
-import Logoff from "./Logoff"
+import { AppBar, Button, FormControl, MenuItem, Select, Toolbar, Typography } from "@mui/material";
+import { styled } from "@mui/system";
 import Link from "next/link";
-import { FormControl } from "@mui/material";
-import { Select } from "@mui/material";
-import { MenuItem } from "@mui/material";
-// import "../styles/styles.css"
+import React, { useEffect, useState } from "react";
+import Auth from "./Auth";
+import Logoff from "./Logoff";
 
 const MyAppBar = styled(AppBar)({
     backgroundColor: "#79BCB8",

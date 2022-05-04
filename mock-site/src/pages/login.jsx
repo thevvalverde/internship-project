@@ -1,8 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
-import { useRouter } from "next/router";
 import React from "react";
-import cookie from "js-cookie"
 
 async function handleLogin(values, logger) {
 
@@ -46,21 +44,16 @@ async function handleLogin(values, logger) {
 }
 
 export default function Login({loginFunction}) {
-    // const router = useRouter();
-
     const validate = values => {
         const errors = {}
-
         if(!values.email) {
             errors.email = "Required"
         }
-
         if(!values.password) {
             errors.password = "Required"
         } else if(values.password.length < 3) {
             errors.password = "Must be longer than 3 digits"
         }
-
         return errors
     }
 
@@ -69,10 +62,6 @@ export default function Login({loginFunction}) {
             validate,
             onSubmit: async (values) => {
                 const ans = await handleLogin(values, loginFunction)
-                // if(ans) {
-                //     // router.push("/")
-                //     // router.reload();
-                // }
             }
     })
 
@@ -104,7 +93,14 @@ export default function Login({loginFunction}) {
                     error={formik.touched.password && formik.errors.password}
                 />
                 <hr style={{border: "none", margin: "10px"}}/>
-                <Button color="secondary" variant="contained" fullWidth type="submit" size="large" margin="dense">
+                <Button 
+                    color="secondary" 
+                    variant="contained" 
+                    fullWidth 
+                    type="submit" 
+                    size="large" 
+                    margin="dense"
+                >
                     Log In
                 </Button>
             </form>

@@ -16,8 +16,6 @@ async function handleRegister(values) {
 
     const data = await checkExistingRegister.json()
 
-    console.log("data: " + JSON.stringify(data));
-
     if(data.found !== 0) {
       alert("This email is already registered")
       return false

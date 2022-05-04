@@ -1,22 +1,5 @@
 import prisma from "../../prisma/client"
-import Cors from "cors"
-
-const cors = Cors({
-    origin: true,
-    methods: ['GET', 'POST']
-})
-
-function runMiddleware(req, res, f) {
-    return new Promise((resolve, reject) => {
-        f(req, res, (result) => {
-            if (result instanceof Error) {
-                return reject(result)
-            }
-            return resolve(result)
-        })
-    })
-}
-
+import {cors, runMiddleware} from "./helper"
 
 export default async function (req, res) {
 

@@ -1,6 +1,9 @@
 import prisma from "../../prisma/client"
+import {cors, runMiddleware} from "./helper"
 
 export default async function(req, res) {
+
+    await runMiddleware(req, res, cors);
 
     const receivedData = req.body;
     const {newDefaultData, orgRef, orgUpdate} = receivedData;

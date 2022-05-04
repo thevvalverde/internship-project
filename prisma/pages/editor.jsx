@@ -1,14 +1,14 @@
+import { Paper } from "@mui/material"
+import { useEffect, useState } from "react"
 import Header from "../components/Header"
 import MySelect from "../components/MySelect"
-import OrgInfo from "../components/OrgInfo"
 import NewOrg from "../components/NewOrg"
-import { Paper } from "@mui/material"
-import { useState } from "react"
-import { useEffect } from "react"
+import OrgInfo from "../components/OrgInfo"
 
 export default function Editor({data}) {
-    const [org, setOrg] = useState(0)
-    const [orgInfo, setOrgInfo] = useState({})
+    
+    const [org, setOrg] = useState(0)           //  0 for none selected, -1 for create new org
+    const [orgInfo, setOrgInfo] = useState({})  
     const [orgs, setOrgs] = useState(data.organizations)
 
     const handleSetOrg = (event) => {
@@ -30,13 +30,19 @@ export default function Editor({data}) {
 
     }
 
-    useEffect(async () => {
+    useEffect(async () => {                                 // Get org data from database everytime some org is selected
+        if(org===-1 || org===0) {
+            return
+        }
         const response = await fetch('/api/get-default-consents', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({orgRef: org})
+            body: JSON.stringify({
+                orgRef: org
+           
+             })
         })
         const data = await response.json()
         setOrgInfo(data);
@@ -61,7 +67,7 @@ export default function Editor({data}) {
 
 export async function getStaticProps() {
 
-    const res = await fetch('http://localhost:3030/api/get-org-defaults')
+    const res = await fetch('http://localhost:3030/api/get-org-defaults')   // Fetch existing orgs
     const data = await res.json()
 
     return {

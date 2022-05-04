@@ -1,8 +1,7 @@
-import Script from "next/script";
-import React, { useRef, useState } from "react";
-import Header from "./Header";
 import cookie from "js-cookie";
-// import data from "./data";
+import Script from "next/script";
+import React, { useState } from "react";
+import Header from "./Header";
 
 export default function Layout({children}) {
 

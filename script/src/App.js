@@ -1,15 +1,12 @@
-import ExpandMore from '@mui/icons-material/ExpandMore'
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import LaunchIcon from '@mui/icons-material/Launch';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useFormik, Form } from "formik";
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import Consent from "./Consent";
 import './App.css';
-import './index.css'
-import { FieldArray } from 'formik';
-import { Formik } from 'formik';
-import { Field } from 'formik';
+import Consent from "./Consent";
+import './index.css';
 
 
 function containsObject(obj, list) {
@@ -21,23 +18,25 @@ function containsObject(obj, list) {
     return false;
 }   
 
-function compareVersions(given, def) {
-    let ans = [];
+function getArrays(given, def) {
+
+    let ready = [];
     let added = [];
     let removed = [];
-    for(const element of given) {
-        if(containsObject(element, def)) {
-            ans.push(element);
+
+    for(const element of given) {               // For each element of given consents,
+        if(containsObject(element, def)) {      // if exists in defaults, it's ready to be served
+            ready.push(element);
         } else {
-            removed.push(element);
+            removed.push(element);              // if not exists in defaults, then it was removed from the company's consents
         }
     }
-    for(const element of def) {
-        if(!containsObject(element, given)) {
+    for(const element of def) {                 // For each element of defaults,
+        if(!containsObject(element, given)) {   // if not exists in given, then it was added to the company's consents
             added.push(element);
         }
     }
-    return {ready: ans, toCreate: added, toRemove: removed}
+    return {ready: ready, toCreate: added, toRemove: removed}
 }
 
 function App({useremail, orgref}) {
@@ -77,38 +76,48 @@ function App({useremail, orgref}) {
                 body: JSON.stringify(receivedData)
             })
             const data = await response.json()
-            console.log(data);
 
             const defaults = await fetch('http://localhost:3030/api/get-default-consents', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({orgRef: receivedData.orgRef})
+                body: JSON.stringify({
+                    orgRef: receivedData.orgRef
+                })
             })
             const defdata = await defaults.json()
 
-            console.log(defdata.defaultConsents);
-
-            let {ready, toCreate, toRemove} = compareVersions(data.consents, defdata.defaultConsents)
+            let {ready, toCreate, toRemove} = getArrays(data.consents, defdata.defaultConsents)
 
             const created = await fetch('http://localhost:3030/api/create-new-consents', {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({toCreate: toCreate, orgRef: receivedData.orgRef, data: {user: data.user, policy: data.policy}})
-            })
+                body: JSON.stringify({
+                        toCreate: toCreate, 
+                        orgRef: receivedData.orgRef, 
+                        data: {
+                            user: data.user, 
+                            policy: data.policy
+                        }
+                    })
+                }
+            )
+
             const createRes = await created.json()
 
             const finalConsentList = [...ready, ...createRes];
 
             setUserInfo(data.user)
             setConsents(finalConsentList)
-            setCheckConsents(finalConsentList.map(consent => ({"value": consent.id, "description": consent.description})))
+            setCheckConsents(finalConsentList.map(consent => ({
+                "value": consent.id, 
+                "description": consent.description
+            })))
             setPolicy(data.policy)
             setVisible(true)
-
 
             // TODO
             // See if consents removed from back-office should be deleted from database
@@ -119,20 +128,21 @@ function App({useremail, orgref}) {
         }, [receivedData])
 
         const formik = useFormik({
-          initialValues: {},
+          initialValues: {},                                // Values are populated dynamically
           onSubmit: async (values) => {
             if(JSON.stringify(values) === '{}') {
-                alert("Saved.")
                 setVisible(false) 
                 return;
             }
-            let givenConsents = [];
+
+            let givenConsents = [];                         // values returned from submit are only the checkbox which were interacted with
             let revokedConsents = [];
+
             for(var id in values) {
-                if(values[id].length===0) {
+                if(values[id].length===0) {                 // Turned off        
                     revokedConsents.push(parseInt(id))
                 } else {
-                    givenConsents.push(parseInt(id))
+                    givenConsents.push(parseInt(id))        // Turned on
                 }
             }
             
@@ -148,15 +158,15 @@ function App({useremail, orgref}) {
                 body: JSON.stringify(data)
             })
             const responseJson = await response.json()
-            alert(JSON.stringify(responseJson, null, 2))
         },
     })
 
     return (
         <div className='tek-parent-div'>
-                <div className={visible ? "main-container" : "hidden"}>
-                    <div className={visible ? "child-container left-child" : "hidden"}>
-                        <h2 className={receivedData.usertoken === "0" ? "hidden" : "centered"}><Typography variant="h4">Consent Policy</Typography> </h2>
+
+                <div className={visible ? "main-container" : "hidden"}>   
+                    <div className={"child-container left-child"}>
+                        <h2 className={"centered"}><Typography variant="h4">Consent Policy</Typography> </h2>
                         <Typography component="p">
                             {policy.policy || ""}
                         </Typography>
@@ -164,13 +174,13 @@ function App({useremail, orgref}) {
 
                     <div className="separator"></div>
 
-                    <div className={visible ? "child-container right-child" : "hidden"}>
-                    <form onSubmit={formik.handleSubmit} className="form">
-                        <Consent consents={consents} formik={formik}/>
-                        <div className={receivedData.usertoken === "0" ? "hidden" : "form-submit-button"}>
-                            <Button variant="contained" type="submit">Submit</Button>
-                        </div>
-                    </form>
+                    <div className={"child-container right-child"}>
+                        <form onSubmit={formik.handleSubmit} className="form">
+                            <Consent consents={consents} formik={formik}/>
+                            <div className={"form-submit-button"}>
+                                <Button variant="contained" type="submit">Submit</Button>
+                            </div>
+                        </form>
                     </div>
 
                     <div className="close-button">

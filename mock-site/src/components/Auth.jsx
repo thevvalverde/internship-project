@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
-import { styled } from "@mui/system";
-import React, { Fragment } from "react";
-import Link from "next/link"
+import Link from "next/link";
+import React from "react";
 
 export default function Auth() {
 
