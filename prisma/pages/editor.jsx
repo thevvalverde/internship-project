@@ -4,6 +4,7 @@ import Header from "../components/Header"
 import MySelect from "../components/MySelect"
 import NewOrg from "../components/NewOrg"
 import OrgInfo from "../components/OrgInfo"
+import { BackgroundPaper, ContentDiv, PageBackDiv, SelectorDiv } from "./_app"
 
 export default function Editor({data}) {
     
@@ -49,19 +50,17 @@ export default function Editor({data}) {
     }, [org])
 
     return (
-        <Paper sx={{backgroundColor:'secondary.main', width:'100%', minHeight:'100%'}}>
-            <div style={{height:"12vh", position:'fixed', zIndex:3, width:'100%'}}>
-                <Header/>
-            </div>
-            <div style={{display:'flex', top:'12%', position:'absolute', height:'88vh', width:'100%'}}>
-                <div style={{flex:1, height:'100%'}}>
+        <BackgroundPaper>
+            <Header/>
+            <PageBackDiv>
+                <SelectorDiv>
                     <MySelect organizations={orgs} value={org} setter={handleSetOrg} creator={createNewOrg}/>
-                </div>
-                <div style={{flex:3, overflow:'auto', padding:'3%'}}>
+                </SelectorDiv>
+                <ContentDiv>
                     {org !== -1 ? <OrgInfo org={orgInfo}/> : <NewOrg finish={finishCreation} update={updateOrgs}/>}
-                </div>
-            </div>
-        </Paper>
+                </ContentDiv>
+            </PageBackDiv>
+        </BackgroundPaper>
     )
 }
 

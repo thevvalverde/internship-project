@@ -83,7 +83,7 @@ export default function NewOrg({finish, update}) {
     }
 
     return (
-        <Container disableGutters >
+        <Container >
                     <MyTextField content={name} handler={handleSetName} label="Organization Name" readonly={false} />
                     <MyTextField content={id} label="Organization ID" readonly={true} fw/>
                     <div style={{position:"relative", display:"flex"}}>

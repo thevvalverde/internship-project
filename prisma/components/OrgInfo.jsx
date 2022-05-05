@@ -5,6 +5,7 @@ import { Paper } from "@mui/material"
 import { useState, useEffect } from "react"
 import MyTextField from "./MyTextField"
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { Typography } from "@mui/material"
 
 export default function OrgInfo({org}) {
 
@@ -102,9 +103,10 @@ export default function OrgInfo({org}) {
     }
 
     return (
-        <Container disableGutters >
+        <Container>
             {orgInfo ? (
                 <>
+                    <Typography variant="overline" sx={{color:"warning.light"}}>Organization Info</Typography>
                     <MyTextField content={name} handler={handleSetName} label="Organization Name" readonly={false} />
                     <MyTextField content={id} label="Organization ID" readonly={true} fw/>
                     <div style={{position:"relative", display:"flex"}}>
@@ -115,6 +117,7 @@ export default function OrgInfo({org}) {
                             <MyTextField content={phone} handler={handleSetPhone} label="Phone Number" readonly={false} />
                         </div>
                     </div>
+                    <Typography variant="overline" sx={{color:"warning.light"}}>Privacy and Consents Info</Typography>
                     <MyTextField content={policy} handler={handleSetPolicy} label="Default Policy" readonly={false} ml />
                     {consents.map((value, index) => {
                         return (

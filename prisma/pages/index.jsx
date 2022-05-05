@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import Header from "../components/Header"
 import DataTable from "../components/DataTable"
 import Searcher from "../components/Searcher"
+import { BackgroundPaper, ContentDiv, PageBackDiv, SelectorDiv } from "./_app"
 
 
 function filterUnique(value, index, self) {
@@ -121,12 +122,10 @@ export default function Home() {
     }, [sub, opt])
 
     return (
-        <>
-            <div style={{height:"12vh", position:'fixed', zIndex:3, width:'100%'}}>
-                <Header/>
-            </div>
-            <div style={{display:'flex', top:'12%', position:'absolute', height:'88vh', width:'100%'}}>
-                <div style={{flex:1, height:'100%'}}>
+        <BackgroundPaper>
+            <Header/>
+            <PageBackDiv>
+                <SelectorDiv>
                     <Searcher 
                         updateRef={updateRef} 
                         orgRef={orgRef} 
@@ -139,11 +138,11 @@ export default function Home() {
                         handleSetOpt={handleSetOpt}
                         resetFilter={resetFilter}
                     /> 
-                </div>
-                <div style={{flex:3, height:'100%'}}>
+                </SelectorDiv>
+                <ContentDiv>
                     <DataTable data={data}/>
-                </div>
-            </div>
-        </>
+                </ContentDiv>
+            </PageBackDiv>
+        </BackgroundPaper>
     ) 
 }

@@ -1,4 +1,6 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { Paper } from '@mui/material'
+import { styled } from '@mui/system'
 import '../styles/styles.css'
 
 const theme = createTheme({
@@ -47,6 +49,41 @@ const theme = createTheme({
     }
 })
 
+const ContentDiv = styled('div')(({theme}) => ({
+    flex:3, 
+    overflow:'auto', 
+    padding:'0',
+}))
+
+const SelectorDiv = styled('div')(({theme}) => ({
+    flex:1, 
+    // height: '100%',
+}))
+
+const HeaderDiv = styled('div')(({theme}) => ({
+    height:"12vh", 
+    position:'fixed', 
+    zIndex:3, 
+    width:'100%',
+}))
+
+// const SelectorDiv = styled('div')(({theme}) => ({
+// }))
+
+const BackgroundPaper = styled(Paper)(({theme}) => ({
+    backgroundColor: theme.palette.secondary.main, 
+    width:'100%', 
+    minHeight:'100%',
+}))
+
+const PageBackDiv = styled('div')(({theme}) => ({
+    display:'flex',
+    top:'12%', 
+    position:'absolute', 
+    height:'88vh', 
+    width:'100%',
+}))
+
 export default function App({Component, pageProps}) {
     return (
             <ThemeProvider theme={theme}>
@@ -54,3 +91,5 @@ export default function App({Component, pageProps}) {
             </ThemeProvider> 
             )
 }
+
+export {ContentDiv, SelectorDiv, HeaderDiv, BackgroundPaper, PageBackDiv}
