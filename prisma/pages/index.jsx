@@ -1,8 +1,8 @@
 import { Button, Container, Paper, TextField, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import Header from "../components/Header"
-import DataTable from "../components/DataTable"
-import Searcher from "../components/Searcher"
+import OrgDataTable from "../components/OrgDataTable"
+import OrgSearcher from "../components/OrgSearcher"
 import { BackgroundPaper, ContentDiv, PageBackDiv, SelectorDiv } from "./_app"
 
 
@@ -126,7 +126,7 @@ export default function Home() {
             <Header/>
             <PageBackDiv>
                 <SelectorDiv>
-                    <Searcher 
+                    <OrgSearcher 
                         updateRef={updateRef} 
                         orgRef={orgRef} 
                         fetchData={fetchData} 
@@ -140,7 +140,7 @@ export default function Home() {
                     /> 
                 </SelectorDiv>
                 <ContentDiv>
-                    <DataTable data={data}/>
+                    <OrgDataTable data={data}/>
                 </ContentDiv>
             </PageBackDiv>
         </BackgroundPaper>

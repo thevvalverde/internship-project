@@ -54,7 +54,7 @@ export default function Editor({data}) {
             <Header/>
             <PageBackDiv>
                 <SelectorDiv>
-                    <MySelect organizations={orgs} value={org} setter={handleSetOrg} creator={createNewOrg}/>
+                    <MySelect items={orgs} value={org} setter={handleSetOrg} creator={createNewOrg} mode="organization"/>
                 </SelectorDiv>
                 <ContentDiv>
                     {org !== -1 ? <OrgInfo org={orgInfo}/> : <NewOrg finish={finishCreation} update={updateOrgs}/>}

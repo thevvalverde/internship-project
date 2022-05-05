@@ -1,9 +1,9 @@
 
 import { Button, Container, Paper, TextField, Typography } from "@mui/material"
-import MyFilter from "../components/MyFilter"
+import MyFilter from "./MyFilter"
 import SelectorContainer from "./SelectorContainer"
 
-export default function Searcher({updateRef, orgRef, fetchData, available, subjects, sub, handleSetSub, opt, handleSetOpt, resetFilter}) {
+export default function OrgSearcher({updateRef, orgRef, fetchData, available, subjects, sub, handleSetSub, opt, handleSetOpt, resetFilter}) {
     return (
         <SelectorContainer>
                 <Typography variant="caption" sx={{fontSize:18}} gutterBottom>

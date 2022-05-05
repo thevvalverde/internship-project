@@ -10,11 +10,15 @@ export default function Header() {
                         <Typography variant="h2" sx={{fontWeight:700, fontFamily:'Roboto', display:'inline-block', width:"25%"}}>ConsentList</Typography>
                         <div style={{display: 'inline-block', width:"74%"}}>
                             <Link href="/">
-                                <Button variant="text" color="secondary" size="large"><h3>Searcher</h3></Button>
+                                <Button variant="text" color="secondary" size="large"><h3>Org Searcher</h3></Button>
                             </Link>
                             {' '}
                             <Link href="/editor">
-                                <Button variant="text" color="secondary" size="large"><h3>Editor</h3></Button>
+                                <Button variant="text" color="secondary" size="large"><h3>Org Editor</h3></Button>
+                            </Link>
+                            {' '}
+                            <Link href="/user-editor">
+                                <Button variant="text" color="secondary" size="large"><h3>User Consents</h3></Button>
                             </Link>
                         </div>
                     </Paper>

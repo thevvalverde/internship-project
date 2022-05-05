@@ -3,18 +3,16 @@ import { useEffect, useState } from "react"
 import { visuallyHidden } from "@mui/utils"
 import superjson from "superjson"
 
-// DATA AND TABLE CREATORS
-
-function createData(id, description, option, consentDate, policy, subject, revoke, validity, history) {
+function createData(id, description, option, consentDate, policy, organization, revoke, validity, history) {
     return {
-        id,
-        description,
-        option,
-        consentDate,
-        policy,
-        subject,
-        revoke,
-        validity,
+        id, 
+        description, 
+        option, 
+        consentDate, 
+        policy, 
+        organization, 
+        revoke, 
+        validity, 
         history
     }
 }
@@ -27,10 +25,10 @@ const consentHeaders = [
         label: 'Serial ID',
     },
     {
-        id: 'subject',
+        id: 'organization',
         numeric: false,
         disablePadding: false,
-        label: 'Subject ID',
+        label: 'Organization Name',
     },  
     {
         id: 'description',
@@ -70,8 +68,6 @@ const consentHeaders = [
     },
 ]
 
-//  SORTING FUNCTIONS
-
 function descendingComparator(a, b, orderBy) {
     if(b[orderBy] < a[orderBy]) {
         return -1;
@@ -99,8 +95,6 @@ function stableSort(array, comparator) {
     });
     return stabilizedArray.map(e => e[0])
 }
-
-// TABLE COMPONENTS
 
 function MyTableHead(props) {
     const { order, orderBy, rowCount, onRequestSort } = props;
@@ -135,6 +129,7 @@ function MyTableHead(props) {
     )
 }
 
+
 function MyRow({row}) {
     const [open, setOpen] = useState(false);
 
@@ -142,7 +137,7 @@ function MyRow({row}) {
         <>
            <TableRow sx={{'& > *': {borderBottom: 'unset'}}} onClick={() => setOpen(!open)}>
                 <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.id}</TableCell>
-                <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.subject}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.organization}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.description}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.option}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.consentDate}</TableCell>
@@ -196,12 +191,14 @@ function parseHistory(input) {
 }
 
 
-export default function DataTable({data}) {
-    
+
+
+export default function UserDataTable({data}) {
+
     const [list, setList] = useState([]);
     const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('serial');
-    
+    const [orderBy, setOrderBy] = useState('id');
+
     useEffect(() => {
         let rows = []
         if(data.consents!==undefined) {
@@ -209,6 +206,7 @@ export default function DataTable({data}) {
                 let revoke = item.revokeDate === null ? "---" : new Date(item.revokeDate).toLocaleString();
                 let option = item.subjectOption ? "Agree" : "Disagree"
                 let history = (data.history !== undefined && item.id in data.history ? parseHistory(data.history[item.id]) : [{id: "-", consentID:"-",changedValue:"-",timestamp:"-"}])
+                let orgName = data.orgs[item.orgReference];
             
                 let consentDate = new Date(item.consentDate).toLocaleString()
                 let validUntil = new Date(item.validUntil).toLocaleString();
@@ -218,7 +216,7 @@ export default function DataTable({data}) {
                     option,
                     consentDate,
                     item.policyID,
-                    data.users[item.subjectId],
+                    orgName,
                     revoke,
                     validUntil,
                     history
@@ -234,11 +232,8 @@ export default function DataTable({data}) {
         setOrderBy(property)
     }
 
-
     return (
-            <Paper sx={{width:'100%', height:'100%'}}>
-                <TableContainer sx={{height:'100%', width:'100%', backgroundColor:'secondary.main'}}>
-
+                <TableContainer >
                     <Table stickyHeader sx={{backgroundColor:'secondary.light'}}>
                         <MyTableHead 
                             order={order}
@@ -254,7 +249,5 @@ export default function DataTable({data}) {
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </Paper>
-        )
+    )
 }
-

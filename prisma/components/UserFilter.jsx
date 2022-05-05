@@ -1,10 +1,7 @@
 import { Button, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Typography } from "@mui/material";
 import { useState } from "react";
 
-export default function MyFilter({subjects, sub, handleSetSub, opt, handleSetOpt, resetFilter}) {
-
-
-
+export default function UserFilter({organizations, org, handleSetOrg, opt, handleSetOpt, resetFilter}) {
 
     return(
         <>
@@ -12,17 +9,17 @@ export default function MyFilter({subjects, sub, handleSetSub, opt, handleSetOpt
             <Typography variant="h4">Filters</Typography>
             <br/>
             <FormControl fullWidth>
-                <InputLabel id="subject-filter">Subject</InputLabel>
+                <InputLabel id="organization-filter">Organization</InputLabel>
                 <Select
-                    labelId="subject-filter"
-                    id="sub-filter"
-                    value={sub}
-                    label="Subject"
-                    onChange={handleSetSub}
+                    labelId="organization-filter"
+                    id="org-filter"
+                    value={org}
+                    label="organization"
+                    onChange={handleSetOrg}
                 >
                     <MenuItem value={0}>None</MenuItem>
-                    {subjects.map((element) => (
-                        <MenuItem value={element.id}>{element.email}</MenuItem>
+                    {organizations.map((element) => (
+                        <MenuItem value={element.id}>{element.name}</MenuItem>
                     ))}
                 </Select>
                 <br/>

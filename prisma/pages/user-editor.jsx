@@ -1,0 +1,144 @@
+import { useEffect } from "react"
+import { useState } from "react"
+import Header from "../components/Header"
+import MySelect from "../components/MySelect"
+import UserDataTable from "../components/UserDataTable"
+import { BackgroundPaper, ContentDiv, PageBackDiv, SelectorDiv } from "./_app"
+
+export default function UserEditor({users}) {
+
+    const [user, setUser] = useState(0)
+    const [baseData, setBaseData] = useState([])
+    const [data, setData] = useState([]);
+    const [available, setAvailable] = useState(false);
+    const [organizations, setOrganizations] = useState([]);
+    const [org, setOrg] = useState(0)
+    const [opt, setOpt] = useState(0)
+
+    const handleSetOrg = (event) => {
+        setOrg(event.target.value)
+    }
+
+    const handleSetOpt = (event) => {
+        setOpt(event.target.value)
+    }
+
+    const resetFilter = () => {
+        setOrg(0)
+        setOpt(0)
+    }
+
+    const reset = () => {
+        setData([])
+        setAvailable(false)
+        setOrganizations([])
+    }
+
+    const handleSetUser = (e) => {
+        setUser(e.target.value)
+    }
+
+    useEffect(async() => {
+        const response = await fetch('/api/get-all-consents', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({user: user}) 
+        })
+        const jsonresponse = await response.json()
+        setAvailable(jsonresponse.consents.length !== 0)
+        setData(jsonresponse)
+        setBaseData(jsonresponse)
+    }, [user])
+
+    useEffect(() => {
+        if(baseData.consents === undefined || baseData.consents.length === 0) {
+            return;
+        }
+        const orgs = []
+        for(const k in baseData.orgs) {
+            orgs.push({id: k, name: baseData.orgs[k]});
+        }
+        orgs.sort((a, b) => {
+            if(a.name > b.name) {
+                return 1;
+            }
+            if(a.name < b.name) {
+                return -1;
+            }
+            return 0;
+        })
+        setOrganizations(orgs)
+    }, [baseData, data])
+
+    useEffect(() => {
+        if(baseData.consents === undefined || baseData.consents.length === 0) {
+            return;
+        }
+        const newList = {history: baseData.history, orgs: {}}
+        newList.consents = baseData.consents.filter(e => {
+            if(org == 0) {
+                if(opt == 0) {
+                    return true
+                }
+                if(opt == 1) {
+                    return e.subjectOption
+                }
+                return !e.subjectOption
+            }
+            if(opt == 0) {
+                return e.orgReference === parseInt(org);
+            }
+            if(opt == 1) {
+                return e.orgReference === parseInt(org) && e.subjectOption;
+            }
+            return e.orgReference === parseInt(org) && !e.subjectOption;
+        })
+        for(const k in baseData.orgs) {
+            if(org === 0 || org === k) {
+                newList.orgs[k] = baseData.orgs[k];
+            }
+        }
+        setData(newList)
+    }, [org, opt])
+
+    return (
+        <BackgroundPaper>
+            <Header/>
+            <PageBackDiv>
+                <SelectorDiv>
+                    <MySelect 
+                        items={users}
+                        value={user} 
+                        setter={handleSetUser} 
+                        mode="user"
+                        available={available} 
+                        organizations={organizations}
+                        handleSetOrg={handleSetOrg} 
+                        org={org} 
+                        opt={opt}
+                        handleSetOpt={handleSetOpt}
+                        resetFilter={resetFilter}
+
+                    />
+                </SelectorDiv>
+                <ContentDiv>
+                    <UserDataTable data={data}/>
+                </ContentDiv>
+            </PageBackDiv>
+        </BackgroundPaper>
+    )
+
+}
+
+
+export async function getStaticProps() {
+
+    const res = await fetch('http://localhost:3030/api/get-all-users')   // Fetch existing orgs
+    const {users} = await res.json()
+
+    return {
+        props: { users },
+    }
+}
