@@ -10,7 +10,7 @@ code {
     monospace;
 }
 
-.centered {
+.tek-centered {
     text-align: center;
 }
 
@@ -20,7 +20,7 @@ code {
     width: 100%;
 }
 
-.main-container {
+.tek-main-container {
     margin-left: 3%;
     width: 94%;
     display: flex;
@@ -30,46 +30,47 @@ code {
     position: relative;
 }
 
-.child-container {
+.tek-child-container {
     flex: 1;
     padding: 1%;
     font-family: 'Roboto';
 }
 
-.left-child {
+.tek-policy-child {
     border-right: 1px solid lightgray;
 }
 
-.right-child {
+.tek-consents-child {
     border-left: 1px solid lightgray;
 }
 
-.close-button {
+.tek-close-button {
     position: absolute;
     top: 0;
     right: 0;
 }
 
-.open-button {
+.tek-open-button {
     position: absolute;
     left: 0;
     bottom: 0;
 }
 
-.form {
+.tek-form {
     height: 100%;
     margin-top: 25px;
     margin-left: 15px;
 }
 
-.hidden {
+.tek-hidden {
     display: none;
     background-color: transparent;
     border-width: 0;
     border-style: none;
 }
 
-.form-submit-button {
+.tek-form-submit-button {
     text-align: right; 
     bottom: 0;
 }
+

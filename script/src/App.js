@@ -164,32 +164,32 @@ function App({useremail, orgref}) {
     return (
         <div className='tek-parent-div'>
 
-                <div className={visible ? "main-container" : "hidden"}>   
-                    <div className={"child-container left-child"}>
-                        <h2 className={"centered"}><Typography variant="h4">Consent Policy</Typography> </h2>
+                <div className={visible ? "tek-main-container" : "tek-hidden"}>   
+                    <div className={"tek-child-container tek-policy-child"}>
+                        <h2 className={"tek-centered"}><Typography variant="h4">Consent Policy</Typography> </h2>
                         <Typography component="p">
                             {policy.policy || ""}
                         </Typography>
                     </div>
 
-                    <div className="separator"></div>
+                    <div className="tek-separator"></div>
 
-                    <div className={"child-container right-child"}>
-                        <form onSubmit={formik.handleSubmit} className="form">
+                    <div className={"tek-child-container tek-consents-child"}>
+                        <form onSubmit={formik.handleSubmit} className="tek-form">
                             <Consent consents={consents} formik={formik}/>
-                            <div className={"form-submit-button"}>
+                            <div className={"tek-form-submit-button"}>
                                 <Button variant="contained" type="submit">Submit</Button>
                             </div>
                         </form>
                     </div>
 
-                    <div className="close-button">
+                    <div className="tek-close-button">
                         <Button aria-label="Close" size="large" onClick={collapse} >
                             <ExpandMore/>
                         </Button>
                     </div>
                 </div>
-                <div className={visible ? "hidden" : "open-button"}>
+                <div className={visible ? "tek-hidden" : "tek-open-button"}>
                     <Button aria-label="Open" size="large" onClick={expand} sx={{borderRadius:"20%", backgroundColor:"#0084F7"}} >
                         <LaunchIcon sx={{color: "black"}}/>
                     </Button> 
