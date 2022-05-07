@@ -7,7 +7,7 @@ export default async function (req, res) {
     try {
         const find = await prisma.user.findFirst({where: {email: email}})
 
-        if(find) {
+        if(!find) {
             res.json({found: 0})
         } else {
             res.json({found: 1, data})
