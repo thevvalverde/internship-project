@@ -1,3 +1,6 @@
+import { DialogTitle } from "@mui/material"
+import { Typography } from "@mui/material"
+import { Dialog } from "@mui/material"
 import { useEffect } from "react"
 import { useState } from "react"
 import Header from "../components/Header"
@@ -12,8 +15,11 @@ export default function UserEditor({users}) {
     const [data, setData] = useState([]);
     const [available, setAvailable] = useState(false);
     const [organizations, setOrganizations] = useState([]);
-    const [org, setOrg] = useState(0)
-    const [opt, setOpt] = useState(0)
+    const [org, setOrg] = useState(0);
+    const [opt, setOpt] = useState(0);
+    const [open, setOpen] = useState(false);
+    const [policyId, setPolicyId] = useState(0);
+    const [policy, setPolicy] = useState("")
 
     const handleSetOrg = (event) => {
         setOrg(event.target.value)
@@ -103,9 +109,49 @@ export default function UserEditor({users}) {
         setData(newList)
     }, [org, opt])
 
+    useEffect(async() => {
+        if(policyId === 0) {
+            return
+        }
+        const response = await fetch('/api/get-policy', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({policy: policyId})
+        })
+        const json = (await response.json()).policy
+        setPolicy(json.policy)
+
+    }, [policyId])
+
+    const handleOpen = () => {
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        setOpen(false)
+    }
+
+    const handleSetPolicyId = (e) => {
+        setPolicyId(e.target.value)
+        handleOpen()
+    }
+
     return (
         <BackgroundPaper>
             <Header/>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+
+            >
+                <DialogTitle sx={{textAlign: "center"}}>Privacy Policy</DialogTitle>
+                <Typography variant="body1" sx={{p:2}}>
+                    {policy}
+                </Typography>
+
+            </Dialog>
             <PageBackDiv>
                 <SelectorDiv>
                     <MySelect 
@@ -124,7 +170,7 @@ export default function UserEditor({users}) {
                     />
                 </SelectorDiv>
                 <ContentDiv>
-                    <UserDataTable data={data}/>
+                    <UserDataTable data={data} handleSetPolicyId={handleSetPolicyId} />
                 </ContentDiv>
             </PageBackDiv>
         </BackgroundPaper>

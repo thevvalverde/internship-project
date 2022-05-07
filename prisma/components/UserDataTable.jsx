@@ -2,6 +2,7 @@ import { Box, Container, TableCell, TableHead, TableRow, TableSortLabel, Paper, 
 import { useEffect, useState } from "react"
 import { visuallyHidden } from "@mui/utils"
 import superjson from "superjson"
+import { Button } from "@mui/material"
 
 function createData(id, description, option, consentDate, policy, organization, revoke, validity, history) {
     return {
@@ -130,7 +131,7 @@ function MyTableHead(props) {
 }
 
 
-function MyRow({row}) {
+function MyRow({row, handleSetPolicyId}) {
     const [open, setOpen] = useState(false);
 
     return (
@@ -142,7 +143,7 @@ function MyRow({row}) {
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.option}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.consentDate}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.validity}</TableCell>
-                <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.policy}</TableCell>
+                <TableCell sx={{color:'secondary.contrastText'}} align="right"><Button variant="text" value={row.policy} onClick={handleSetPolicyId}>{row.policy}</Button></TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.revoke}</TableCell>
            </TableRow> 
            <TableRow sx={{backgroundColor:'secondary.main'}}>
@@ -193,7 +194,7 @@ function parseHistory(input) {
 
 
 
-export default function UserDataTable({data}) {
+export default function UserDataTable({data, handleSetPolicyId}) {
 
     const [list, setList] = useState([]);
     const [order, setOrder] = useState('asc');
@@ -244,7 +245,7 @@ export default function UserDataTable({data}) {
                         <TableBody>
                             {stableSort(list, getComparator(order, orderBy))
                                 .map((row, index) => (
-                                    <MyRow key={row.id} row={row} />
+                                    <MyRow key={row.id} row={row} handleSetPolicyId={handleSetPolicyId}/>
                                 ))}
                         </TableBody>
                     </Table>
