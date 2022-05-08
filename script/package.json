@@ -21,7 +21,7 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "build:widget": "parcel build src/index.js --no-source-maps -d widget && cp src/index.css widget/index.css"
+    "build:widget": "parcel build src/index.js src/*.css --no-source-maps -d widget"
   },
   "eslintConfig": {
     "extends": [

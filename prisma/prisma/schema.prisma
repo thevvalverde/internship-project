@@ -45,6 +45,7 @@ model organization {
   contactEmail String
   consent      consent[]
   defaultData  defaultData[]
+  display      Int           @default(1)
 }
 
 model consentHistory {

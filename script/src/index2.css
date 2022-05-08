@@ -1,0 +1,26 @@
+.tek-centered {
+    text-align: center;
+}
+
+.tek-parent-div {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.tek-main-container {
+    margin-left: 3%;
+    width: 94%;
+    display: flex;
+    background-color: #f0f8ff;
+    border: 2px solid #86C6FF;
+    border-radius: 10px;
+    position: relative;
+}
+
+.tek-child-container {
+    flex: 1;
+    padding: 1%;
+    font-family: 'Roboto';
+}
+

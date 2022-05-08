@@ -25,8 +25,6 @@ const loadDiv = () => {
     div.dataset.orgref = orgref
     div.classList.add('tekprivacy-widget')
     document.body.appendChild(div)
-    div.onload = () => {
-    }
 }
 
 loadDiv()

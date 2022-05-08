@@ -4,9 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import './App.css';
 import Consent from "./Consent";
-import './index.css';
 
 
 function containsObject(obj, list) {
@@ -44,7 +42,7 @@ function App({useremail, orgref}) {
     const [receivedData, setReceivedData] = useState({userEmail: useremail, orgRef: parseInt(orgref)})
     const [userInfo, setUserInfo] = useState({})
     const [consents, setConsents] = useState([])
-    const [checkConsents, setCheckConsents] = useState([])
+    // const [checkConsents, setCheckConsents] = useState([])
     const [policy, setPolicy] = useState({})
     const [visible, setVisible] = useState(true)
 
@@ -63,7 +61,7 @@ function App({useremail, orgref}) {
             if(receivedData.userEmail === "") {
                 setUserInfo({})            
                 setConsents([])
-                setCheckConsents([])
+                // setCheckConsents([])
                 setPolicy({})
                 setVisible(false)
                 return
@@ -112,10 +110,10 @@ function App({useremail, orgref}) {
 
             setUserInfo(data.user)
             setConsents(finalConsentList)
-            setCheckConsents(finalConsentList.map(consent => ({
-                "value": consent.id, 
-                "description": consent.description
-            })))
+            // setCheckConsents(finalConsentList.map(consent => ({
+            //     "value": consent.id, 
+            //     "description": consent.description
+            // })))
             setPolicy(data.policy)
             setVisible(true)
 
@@ -150,14 +148,13 @@ function App({useremail, orgref}) {
             
             setVisible(false) 
 
-            const response = await fetch('http://localhost:3030/api/update-subject-data', {
+            await fetch('http://localhost:3030/api/update-subject-data', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(data)
             })
-            const responseJson = await response.json()
         },
     })
 
