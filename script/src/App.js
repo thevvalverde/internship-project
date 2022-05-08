@@ -169,7 +169,6 @@ function App({useremail, orgref}) {
                         </Typography>
                     </div>
 
-                    <div className="tek-separator"></div>
 
                     <div className={"tek-child-container tek-consents-child"}>
                         <form onSubmit={formik.handleSubmit} className="tek-form">

@@ -6,6 +6,10 @@ import { useState, useEffect } from "react"
 import MyTextField from "./MyTextField"
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Typography } from "@mui/material"
+import { Select } from "@mui/material"
+import { FormControl } from "@mui/material"
+import { InputLabel } from "@mui/material"
+import { MenuItem } from "@mui/material"
 
 export default function OrgInfo({org}) {
 
@@ -17,6 +21,7 @@ export default function OrgInfo({org}) {
     const [email, setEmail] = useState("")
     const [policy, setPolicy] = useState("")
     const [consents, setConsents] = useState([])
+    const [display, setDisplay] = useState("")
 
     useEffect(() => {
         if(!orgInfo || orgInfo === 0) {
@@ -26,6 +31,7 @@ export default function OrgInfo({org}) {
         setId(orgInfo.id)
         setPhone(orgInfo.contactPhone)
         setEmail(orgInfo.contactEmail)
+        setDisplay(orgInfo.display)
         setPolicy(defaultPolicy)
         setConsents(defaultConsents)
     }, [org])
@@ -44,6 +50,10 @@ export default function OrgInfo({org}) {
 
     const handleSetPolicy = (event) => {
         setPolicy(event.target.value)
+    }
+
+    const handleSetDisplay = (event) => {
+        setDisplay(event.target.value)
     }
 
     const removeConsent = (index) => {
@@ -87,6 +97,7 @@ export default function OrgInfo({org}) {
                 name: name,
                 contactEmail: email,
                 contactPhone: phone,
+                display: display
             }
         }
 
@@ -108,7 +119,29 @@ export default function OrgInfo({org}) {
                 <>
                     <Typography variant="overline" sx={{color:"warning.light"}}>Organization Info</Typography>
                     <MyTextField content={name} handler={handleSetName} label="Organization Name" readonly={false} />
-                    <MyTextField content={id} label="Organization ID" readonly={true} fw/>
+                    <div style={{position: 'relative', display: 'flex'}}>
+                        <div style={{flex: 4, paddingRight:20}}>
+                            <MyTextField content={id} label="Organization ID" readonly={true} fw/>
+                        </div>
+                        <div style={{flex: 1}}>
+                            <FormControl fullWidth sx={{mt:1, backgroundColor:'secondary.light', borderRadius:1, color:'secondary.contrastText',width:'103%'}}>
+                            <InputLabel id="display-select" sx={{color:'info.main', paddingTop:'3px'}}>Display</InputLabel>
+                                <Select
+                                    labelId="display-select"
+                                    id="display-select"
+                                    label="Display"
+                                    value={display}
+                                    onChange={handleSetDisplay}
+                                    sx={{color: 'secondary.contrastText', width:'100%'}}
+                                >
+                                    <MenuItem value={0}></MenuItem>
+                                    <MenuItem value={1}>Bottom</MenuItem>
+                                    <MenuItem value={2}>Left</MenuItem>
+                                    <MenuItem value={3}>Right</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </div>
+                    </div>
                     <div style={{position:"relative", display:"flex"}}>
                         <div style={{flex:1, paddingRight:20}}>
                             <MyTextField content={email} handler={handleSetEmail} label="Email" readonly={false} />
