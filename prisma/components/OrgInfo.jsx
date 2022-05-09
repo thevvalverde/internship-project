@@ -1,15 +1,10 @@
-import { TextField } from "@mui/material"
-import { Container } from "@mui/material"
-import { IconButton, Button } from "@mui/material"
-import { Paper } from "@mui/material"
-import { useState, useEffect } from "react"
+import { Button, Container, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
+import { DatePicker } from "@mui/x-date-pickers/DatePicker"
+import { useEffect, useState } from "react"
 import MyTextField from "./MyTextField"
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { Typography } from "@mui/material"
-import { Select } from "@mui/material"
-import { FormControl } from "@mui/material"
-import { InputLabel } from "@mui/material"
-import { MenuItem } from "@mui/material"
+import { TextField } from "@mui/material"
 
 export default function OrgInfo({org}) {
 
@@ -74,18 +69,25 @@ export default function OrgInfo({org}) {
         setConsents(arr)
     }
 
+    const handleDateChange = (newValue, index) => {
+        let arr = consents.slice()
+        arr[index].validUntil = newValue
+        setConsents(arr)
+    }
+
     const saveChanges = async() => {
         let newConsents = consents.filter(v => (v.description!==""));
-        newConsents = newConsents.map(c => {
+        for(let c of newConsents) {
             if(c.validUntil === '') {
-                return {...c, validUntil: (new Date('2029-02-28'))}
-            } 
-            return c
-        })
+                alert('Please fill all the fields')
+                return
+            }
+        }
         if(newConsents.length === 0 || policy === "" || name === "") {
             alert("Please fill all the fields")
             return;
         }
+        setConsents(newConsents)
         
         let data = {
             newDefaultData: {
@@ -159,7 +161,19 @@ export default function OrgInfo({org}) {
                                     <MyTextField content={value.description} handler={(event) => handleConsentChange(event,index)} label={`Consent ${index}`} readonly={false} id={index}/>
                                 </div>
                                 <div style={{flex:3, paddingLeft:10}}>
-                                    <MyTextField content={value.validUntil} label="Valid until" readonly={true} id={index}/>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <DatePicker
+                                            label="Valid until"
+                                            value={value.validUntil}
+                                            onChange={(newValue) => {
+                                                handleDateChange(newValue, index)
+                                            }}
+                                            renderInput={(params) => <TextField 
+                                                sx={{marginTop: '8px', backgroundColor:'secondary.light', input: {color: 'secondary.contrastText'}, label: {color: 'info.light', padding:'3px'}, textarea: {color: 'secondary.contrastText'}}}
+                                            {...params} />}
+                                        />
+                                    </LocalizationProvider>
+                                    {/* <MyTextField content={value.validUntil} label="Valid until" readonly={true} id={index}/> */}
                                 </div>
                                 <div style= {{flex:1, marginTop:7, marginBottom:5, marginLeft:10, textAlign:'right'}}>
                                     <Button variant="outlined" aria-label="delete" color='info' sx={{height:'100%', width:'90%'}} onClick={() => removeConsent(index)}>
