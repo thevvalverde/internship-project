@@ -70,7 +70,7 @@ export default function Editor({data}) {
 
 export async function getStaticProps() {
 
-    const res = await fetch('http://localhost:3030/api/get-org-defaults')   // Fetch existing orgs
+    const res = await fetch(process.env.BASE_URL)   // Fetch existing orgs
     const data = await res.json()
 
     return {
