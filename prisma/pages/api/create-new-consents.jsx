@@ -1,4 +1,4 @@
-import prisma from "../../prisma/client"
+import {prisma} from "../../prisma/client"
 import {cors, runMiddleware} from "./helper"
 
 export default async function(req, res) {
