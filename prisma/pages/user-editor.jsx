@@ -189,7 +189,7 @@ export default function UserEditor({users}) {
 
 export async function getStaticProps() {
 
-    const res = await fetch(process.env.BASE_URL)   // Fetch existing orgs
+    const res = await fetch(`${process.env.BASE_URL}/api/get-org-defaults`)   // Fetch existing orgs
     const {users} = await res.json()
 
     return {
