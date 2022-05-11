@@ -6,11 +6,11 @@ import NewOrg from "../components/NewOrg"
 import OrgInfo from "../components/OrgInfo"
 import { BackgroundPaper, ContentDiv, PageBackDiv, SelectorDiv } from "./_app"
 
-export default function Editor({data}) {
+export default function Editor() {
     
     const [org, setOrg] = useState(0)           //  0 for none selected, -1 for create new org
     const [orgInfo, setOrgInfo] = useState({})  
-    const [orgs, setOrgs] = useState(data.organizations)
+    const [orgs, setOrgs] = useState([])
 
     const handleSetOrg = (event) => {
         setOrg(event.target.value);
@@ -30,6 +30,15 @@ export default function Editor({data}) {
         setOrgs(data.organizations)
 
     }
+
+    useEffect(() => {
+        const asyncFetchAndSet = async () => {
+            const res = await fetch('/api/get-org-defaults')   // Fetch existing orgs
+            const jsonres = await res.json()
+            setOrgs(jsonres.organizations)
+        }
+        asyncFetchAndSet()
+    },[])
 
     useEffect(() => {                                 // Get org data from database everytime some org is selected
         if(org===-1 || org===0) {
@@ -66,14 +75,4 @@ export default function Editor({data}) {
             </PageBackDiv>
         </BackgroundPaper>
     )
-}
-
-export async function getStaticProps() {
-
-    const res = await fetch(`${process.env.BASE_URL}/api/get-org-defaults`)   // Fetch existing orgs
-    const data = await res.json()
-
-    return {
-        props: { data },
-    }
 }

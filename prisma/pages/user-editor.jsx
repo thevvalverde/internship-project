@@ -8,9 +8,10 @@ import MySelect from "../components/MySelect"
 import UserDataTable from "../components/UserDataTable"
 import { BackgroundPaper, ContentDiv, PageBackDiv, SelectorDiv } from "./_app"
 
-export default function UserEditor({users}) {
+export default function UserEditor() {
 
     const [user, setUser] = useState(0)
+    const [users, setUsers] = useState([])
     const [baseData, setBaseData] = useState([])
     const [data, setData] = useState([]);
     const [available, setAvailable] = useState(false);
@@ -43,6 +44,15 @@ export default function UserEditor({users}) {
     const handleSetUser = (e) => {
         setUser(e.target.value)
     }
+
+    useEffect(() => {
+        const asyncFetchAndSet = async () => {
+            const res = await fetch('/api/get-all-users')   // Fetch existing orgs
+            const jsonres = await res.json()
+            setUsers(jsonres.users)
+        }
+        asyncFetchAndSet()
+    },[])
 
     useEffect(() => {
         const asyncFetchAndSet = async () => {
@@ -184,15 +194,4 @@ export default function UserEditor({users}) {
         </BackgroundPaper>
     )
 
-}
-
-
-export async function getStaticProps() {
-
-    const res = await fetch(`${process.env.BASE_URL}/api/get-org-defaults`)   // Fetch existing orgs
-    const {users} = await res.json()
-
-    return {
-        props: { users },
-    }
 }
