@@ -6,14 +6,6 @@ export default function Policy(props) {
 
     console.log("props.clientid: " + props.clientID);
 
-    // useEffect(async () => {
-    //     prisma.consent.findMany({where: {subjectId: props.clientID}}).then((list) => console.log)
-    //     prisma.policy.findFirst({where: {policyID: consents[0].policyID}}).then((policy) => console.log)
-    // }, [])
-
-    // console.log(consents);
-    // console.log(policy);
-
     return <div className="policy-div">
                 <div className="child-div">
                     <h2>Privacy Policy</h2>

@@ -1,4 +1,4 @@
-import prisma from "../../db.ts";
+import {prisma} from "../../db.ts";
 
 export default async function (req, res) {
 

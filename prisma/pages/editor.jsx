@@ -31,22 +31,26 @@ export default function Editor({data}) {
 
     }
 
-    useEffect(async () => {                                 // Get org data from database everytime some org is selected
+    useEffect(() => {                                 // Get org data from database everytime some org is selected
         if(org===-1 || org===0) {
             return
         }
-        const response = await fetch('/api/get-default-consents', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                orgRef: org
-           
-             })
-        })
-        const data = await response.json()
-        setOrgInfo(data);
+        const asyncFetchAndSet = async () => {
+            const response = await fetch('/api/get-default-consents', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    orgRef: org
+                    
+                })
+            })
+            const data = await response.json()
+            setOrgInfo(data);
+        }
+        asyncFetchAndSet()
+
     }, [org])
 
     return (

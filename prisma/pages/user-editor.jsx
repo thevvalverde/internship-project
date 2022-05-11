@@ -44,18 +44,22 @@ export default function UserEditor({users}) {
         setUser(e.target.value)
     }
 
-    useEffect(async() => {
-        const response = await fetch('/api/get-all-consents', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({user: user}) 
-        })
-        const jsonresponse = await response.json()
-        setAvailable(jsonresponse.consents.length !== 0)
-        setData(jsonresponse)
-        setBaseData(jsonresponse)
+    useEffect(() => {
+        const asyncFetchAndSet = async () => {
+
+            const response = await fetch('/api/get-all-consents', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({user: user}) 
+            })
+            const jsonresponse = await response.json()
+            setAvailable(jsonresponse.consents.length !== 0)
+            setData(jsonresponse)
+            setBaseData(jsonresponse)
+        }
+        asyncFetchAndSet()
     }, [user])
 
     useEffect(() => {
@@ -109,19 +113,23 @@ export default function UserEditor({users}) {
         setData(newList)
     }, [org, opt])
 
-    useEffect(async() => {
+    useEffect(() => {
         if(policyId === 0) {
             return
         }
-        const response = await fetch('/api/get-policy', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({policy: policyId})
-        })
-        const json = (await response.json()).policy
-        setPolicy(json.policy)
+        const asyncFetchAndSet = async () => {
+
+            const response = await fetch('/api/get-policy', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({policy: policyId})
+            })
+            const json = (await response.json()).policy
+            setPolicy(json.policy)
+        }
+        asyncFetchAndSet()
 
     }, [policyId])
 
