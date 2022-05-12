@@ -58,9 +58,12 @@ export default function Header(props) {
     const [orgs, setOrgs] = useState([])
 
     useEffect(async() => {
-        const res = await fetch('http://localhost:3030/api/get-org-defaults')
-        const data = await res.json()
-        setOrgs(data.organizations)
+        const asyncFetchAndSet = async() => {
+            const res = await fetch('https://tp-back-office.herokuapp.com/api/get-org-defaults')
+            const data = await res.json()
+            setOrgs(data.organizations)
+        }
+        asyncFetchAndSet()
     }, [])
 
     const getButtons = () => {
