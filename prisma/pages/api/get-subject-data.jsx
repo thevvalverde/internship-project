@@ -33,7 +33,7 @@ export default async function (req, res) {
 
         if(consents.length === 0) {
             console.log("Consent length 0");
-            const response = await fetch('http://localhost:3030/api/get-default-consents', { // Fetch default consents data for this organization
+            const response = await fetch('https://tp-back-office.herokuapp.com/api/get-default-consents', { // Fetch default consents data for this organization
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

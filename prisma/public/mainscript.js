@@ -1,3 +1,4 @@
+let baseurl = 'https://tp-back-office.herokuapp.com'
 let display = 1
 
 const loadDiv = async() => {
@@ -10,7 +11,7 @@ const loadDiv = async() => {
     div.style.position = "relative"
     div.style.zIndex = 2000
     console.log('asdgasdgas');
-    let response = await fetch(`https://tp-back-office.herokuapp.com/api/get-org-display`, {
+    let response = await fetch(`${baseurl}/api/get-org-display`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -28,12 +29,12 @@ const loadJs = () => {
     if(!existingScript) {
         const css = document.createElement('link')
         css.type = 'text/css'
-        css.href = `https://tp-back-office.herokuapp.com/index${display}.css`
-        console.log(`https://tp-back-office.herokuapp.com/index${display}.css`);
+        css.href = `${baseurl}/index${display}.css`
+        console.log(`${baseurl}/index${display}.css`);
         css.rel = 'stylesheet'
         document.head.appendChild(css)
         const script = document.createElement('script')
-        script.src = `https://tp-back-office.herokuapp.com/index.js`
+        script.src = `${baseurl}/index.js`
         script.id = 'tek-widget-js'
         document.body.appendChild(script)
 

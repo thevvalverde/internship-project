@@ -6,6 +6,8 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import Consent from "./Consent";
 
+const baseurl = 'https://tp-back-office.herokuapp.com'
+
 
 function containsObject(obj, list) {
     for(let i = 0; i < list.length; i++) {
@@ -66,7 +68,7 @@ function App({useremail, orgref}) {
                 setVisible(false)
                 return
             }
-            const response = await fetch('http://localhost:3030/api/get-subject-data', {
+            const response = await fetch(`${baseurl}/api/get-subject-data`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -75,7 +77,7 @@ function App({useremail, orgref}) {
             })
             const data = await response.json()
 
-            const defaults = await fetch('http://localhost:3030/api/get-default-consents', {
+            const defaults = await fetch(`${baseurl}/api/get-default-consents`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -88,7 +90,7 @@ function App({useremail, orgref}) {
 
             let {ready, toCreate, toRemove} = getArrays(data.consents, defdata.defaultConsents)
 
-            const created = await fetch('http://localhost:3030/api/create-new-consents', {
+            const created = await fetch(`${baseurl}/api/create-new-consents`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -110,16 +112,9 @@ function App({useremail, orgref}) {
 
             setUserInfo(data.user)
             setConsents(finalConsentList)
-            // setCheckConsents(finalConsentList.map(consent => ({
-            //     "value": consent.id, 
-            //     "description": consent.description
-            // })))
             setPolicy(data.policy)
             setVisible(true)
 
-            // TODO
-            // See if consents removed from back-office should be deleted from database
-            // const removed = await fetch('http://localhost:3030/api')
 
           }
           fetchData()          
@@ -148,7 +143,7 @@ function App({useremail, orgref}) {
             
             setVisible(false) 
 
-            await fetch('http://localhost:3030/api/update-subject-data', {
+            await fetch(`${baseurl}/api/update-subject-data`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
