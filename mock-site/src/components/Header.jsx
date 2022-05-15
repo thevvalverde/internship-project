@@ -48,16 +48,12 @@ const headerData = [
     }
 ]
 
-let auth = false;
-
-
-
 
 export default function Header(props) {
 
     const [orgs, setOrgs] = useState([])
 
-    useEffect(async() => {
+    useEffect(() => {
         const asyncFetchAndSet = async() => {
             const res = await fetch('https://tp-back-office.herokuapp.com/api/get-org-defaults')
             const data = await res.json()
@@ -82,7 +78,7 @@ export default function Header(props) {
             <MyAppBar>
                     <MyToolbar>
                         <MyTypography variant="h2" component="h1">
-                            <Link href="/"><a className="logo">eXample {props.org}</a></Link>
+                            <Link href="/"><a className="logo" href="/">eXample {props.org}</a></Link>
                         </MyTypography>
                         <div>
                             <FormControl>

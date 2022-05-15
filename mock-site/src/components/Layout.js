@@ -9,8 +9,8 @@ export default function Layout({children}) {
     let userEmail = cookie.get("email")
     let orgRef = cookie.get("org")
 
-    const [auth, setAuth] = useState(userToken != undefined); 
-    const [org, setOrg] = useState((orgRef == undefined ? 2 : orgRef))
+    const [auth, setAuth] = useState(userToken !== undefined); 
+    const [org, setOrg] = useState((orgRef === undefined ? 2 : orgRef))
     
     function ChildComponent({children}) {
         return (
@@ -42,7 +42,7 @@ export default function Layout({children}) {
             <div className="main-body centered" id="root">
                 {ChildComponent({children})}
             </div>
-            <Script src="https://tp-back-office.herokuapp.com/mainscript.js" crossOrigin="anonymous" data-useremail={userEmail == undefined ? "" : userEmail} data-orgref={org} id="tek-script"/>
+            <Script src="https://tp-back-office.herokuapp.com/mainscript.js" crossOrigin="anonymous" data-useremail={userEmail === undefined ? "" : userEmail} data-orgref={org} id="tek-script"/>
         </div>
     )
 }

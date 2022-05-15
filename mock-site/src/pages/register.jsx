@@ -1,6 +1,5 @@
+import { Button, TextField } from "@mui/material";
 import { useFormik } from "formik";
-import { TextField, Button } from "@mui/material";
-import { PrismaClient } from "@prisma/client"
 import { useRouter } from "next/router";
 
 async function handleRegister(values) {
@@ -29,7 +28,6 @@ async function handleRegister(values) {
       body: JSON.stringify(values)
     })
 
-    const stringResponse = await response.json()
     return true
 
 
@@ -54,7 +52,7 @@ export default function Register() {
 
     if (!values.confirm) {
         errors.confirm = "Required";
-    } else if( values.confirm != values.password) {
+    } else if( values.confirm !== values.password) {
         errors.confirm = "Password and confirmation must match!"
     }
 

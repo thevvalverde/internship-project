@@ -10,7 +10,7 @@ export default async function (req, res) {
         if(!find) {
             res.json({found: 0})
         } else {
-            res.json({found: 1, data})
+            res.json({found: 1, data : find})
         }
         res.status(200)
     } catch (error) {
