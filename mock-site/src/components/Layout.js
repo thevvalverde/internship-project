@@ -22,13 +22,13 @@ export default function Layout({children}) {
     const passUserInfo = (userInfo) => {
         cookie.set("token", userInfo.id, { expires: 1/24 })
         cookie.set("email", userInfo.email, {expires: 1/24})
-        window.location.href="http://localhost:3000"
+        window.location.href="https://tp-mock-site.herokuapp.com"
     }
 
     const removeUserInfo = () => {
         cookie.remove("token")
         cookie.remove("email")
-        window.location.href="http://localhost:3000"
+        window.location.href="https://tp-mock-site.herokuapp.com"
     }
 
     const handleSetOrg = (e) => {
