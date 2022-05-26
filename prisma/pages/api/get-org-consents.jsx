@@ -1,6 +1,8 @@
 import {prisma} from "../../prisma/client"
 // import {cors, runMiddleware} from "./helper"
 
+// Returns all consents, histories and data subjects of a given organization
+
 export default async function (req, res) {
 
     const orgRef = parseInt(req.body.orgRef);

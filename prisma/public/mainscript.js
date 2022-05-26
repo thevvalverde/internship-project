@@ -10,7 +10,6 @@ const loadDiv = async() => {
     div.dataset.orgref = orgref
     div.style.position = "relative"
     div.style.zIndex = 2000
-    console.log('asdgasdgas');
     let response = await fetch(`${baseurl}/api/get-org-display`, {
         method: 'POST',
         headers: {

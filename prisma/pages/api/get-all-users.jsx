@@ -1,6 +1,8 @@
 import {prisma} from "../../prisma/client"
 import {cors, runMiddleware} from "./helper"
 
+// Return every user registered with any organization.
+
 export default async function (req, res) {
 
     await runMiddleware(req, res, cors)

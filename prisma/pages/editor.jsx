@@ -25,7 +25,7 @@ export default function Editor() {
     }
 
     const updateOrgs = async() => {
-        const res = await fetch('/api/get-org-defaults')
+        const res = await fetch('/api/get-all-orgs')
         const data = await res.json()
         setOrgs(data.organizations)
 
@@ -33,7 +33,7 @@ export default function Editor() {
 
     useEffect(() => {
         const asyncFetchAndSet = async () => {
-            const res = await fetch('/api/get-org-defaults')   // Fetch existing orgs
+            const res = await fetch('/api/get-all-orgs')   // Fetch existing orgs
             const jsonres = await res.json()
             setOrgs(jsonres.organizations)
         }

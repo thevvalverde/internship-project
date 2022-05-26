@@ -1,6 +1,8 @@
 import {prisma} from "../../prisma/client"
 import {cors, runMiddleware} from "./helper"
 
+// Returns all consents, histories and organizations tied to any one data subject.
+
 export default async function (req, res) {
 
     await runMiddleware(req, res, cors)

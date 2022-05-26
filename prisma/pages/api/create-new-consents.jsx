@@ -1,6 +1,8 @@
 import {prisma} from "../../prisma/client"
 import {cors, runMiddleware} from "./helper"
 
+// Creates new consents for a given organization, subject and policy
+
 export default async function(req, res) {
 
     await runMiddleware(req, res, cors)

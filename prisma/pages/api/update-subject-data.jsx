@@ -1,6 +1,8 @@
 import {prisma} from "../../prisma/client";
 import { cors, runMiddleware } from "./helper";
 
+// Saves a given subject data, e.g. their consents, revoked or given.
+
 export default async function (req, res) {
 
     await runMiddleware(req, res, cors)
