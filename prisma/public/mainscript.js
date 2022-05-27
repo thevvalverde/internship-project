@@ -2,6 +2,7 @@ let baseurl = 'https://tp-back-office.herokuapp.com'
 let display = 1
 
 const loadDiv = async() => {
+    console.log(document.cookie);
     const div = document.createElement('div')
     div.id = "tek-div"
     let uemail = (document.getElementById('tek-script').dataset.useremail);
