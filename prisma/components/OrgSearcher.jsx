@@ -6,7 +6,7 @@ import SelectorContainer from "./SelectorContainer"
 export default function OrgSearcher({updateRef, orgRef, fetchData, available, subjects, sub, handleSetSub, opt, handleSetOpt, resetFilter}) {
     return (
         <SelectorContainer>
-                <Typography variant="caption" sx={{fontSize:18}} gutterBottom>
+                <Typography variant="caption" color="secondary" sx={{fontSize:18}} gutterBottom>
                     Enter your organization reference:
                 </Typography>
                 <br/>
@@ -19,7 +19,7 @@ export default function OrgSearcher({updateRef, orgRef, fetchData, available, su
                     label="Organization Reference" 
                     variant="filled" 
                     value={orgRef} 
-                    color="secondary"
+                    color="info"
                 />
 
                 <Button sx={{width:"100%", margin:"10px 0"}} variant="contained" color='info' onClick={fetchData}>

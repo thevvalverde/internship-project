@@ -6,14 +6,14 @@ export default function MySelect({items, value, setter, creator, mode, available
     return(
             <SelectorContainer>
 
-                <Typography variant="caption" sx={{fontSize:18}}>
+                <Typography variant="caption" sx={{fontSize:18}} color="secondary">
                     Select the {mode}:
                 </Typography>
 
                 <br/>
                 <br/>
 
-                <FormControl fullWidth>
+                <FormControl fullWidth color="secondary">
                     <InputLabel id="items-list">{`${mode[0].toUpperCase()}${mode.slice(1)}`}</InputLabel>
                     <Select
                         variant="filled"
@@ -27,7 +27,7 @@ export default function MySelect({items, value, setter, creator, mode, available
                         ))}
                     </Select>
 
-                    {mode === "organization"    ?   <Button sx={{width:"100%", margin:"10px 0"}} variant="contained" color='success' onClick={creator}>
+                    {mode === "organization"    ?   <Button sx={{width:"100%", margin:"10px 0"}} variant="contained" color='info' onClick={creator}>
                                                         Create new
                                                     </Button>
                                                 :   null}

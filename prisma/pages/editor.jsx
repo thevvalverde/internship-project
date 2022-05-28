@@ -64,7 +64,7 @@ export default function Editor() {
 
     return (
         <BackgroundPaper>
-            <Header/>
+            <Header active={1}/>
             <PageBackDiv>
                 <SelectorDiv>
                     <MySelect items={orgs} value={org} setter={handleSetOrg} creator={createNewOrg} mode="organization"/>

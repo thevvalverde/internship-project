@@ -9,7 +9,7 @@ export default function MyFilter({subjects, sub, handleSetSub, opt, handleSetOpt
     return(
         <>
             <hr/>
-            <Typography variant="h4">Filters</Typography>
+            <Typography variant="h4" color="secondary">Filters</Typography>
             <br/>
             <FormControl fullWidth>
                 <InputLabel id="subject-filter">Subject</InputLabel>
@@ -35,14 +35,14 @@ export default function MyFilter({subjects, sub, handleSetSub, opt, handleSetOpt
                     onChange={handleSetOpt}
                 >
                     <FormControlLabel value={0} control={<Radio color="info"/>} label="Any"/>
-                    <FormControlLabel value={1} control={<Radio color="info"/>} label="Agreed"/>
                     <FormControlLabel value={2} control={<Radio color="info"/>} label="Disagreed"/>
+                    <FormControlLabel value={1} control={<Radio color="info"/>} label="Agreed"/>
                 </RadioGroup>
                 <br/>
                 <Button 
                     onClick={resetFilter}
                     variant="contained"
-                    color="secondary"
+                    color="info"
                 >Reset Filters</Button>
             </FormControl>
         </>

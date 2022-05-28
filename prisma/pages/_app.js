@@ -6,23 +6,31 @@ import '../styles/styles.css'
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#b2ebf2",
+            main: "#001166",
 
         },
         secondary: {
-            main: "#1b243f",
+            light: "#efefef",
+            main: "#DBDBDB",
+            dark: "#9d9d9d"
         },
         error: {
-            main: "#9e2b25",
+            main: "#AF3029",
         },
         warning: {
             main: "#ffc857",
         },
         info: {
-            main: "#b18fcf",
+            main: "#0ACCBC",
         },
         success: {
-            main: "#a5cc6b",
+            main: "#0ACC79",
+        },
+        selected: {
+            main: "#0A86C4"
+        },
+        hovered: {
+            main: "#F8FFFE"
         }
     },
     components: {
@@ -30,7 +38,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     '&.Mui-active': {
-                        color: "#d8ff9b"
+                        color: "#5B0CED"
                     }
                 },
 
@@ -39,9 +47,9 @@ const theme = createTheme({
         MuiFormLabel: {
             styleOverrides: {
                 root: {
-                    color: "#1b243f",
+                    color: "#EDEDED",
                     '&.Mui-focused': {
-                        color:"#1b243f"
+                        color:"#EDEDED"
                     }
                 }
             }
@@ -49,8 +57,14 @@ const theme = createTheme({
         MuiOutlinedInput: {
             styleOverrides: {
                 root: {
+                    "&.MuiOutlinedInput-root .MuiSelect-select ~ .MuiOutlinedInput-notchedOutline" : {
+                        borderColor: "#f2f2f2"
+                    },
+                    "&.MuiOutlinedInput-root .MuiSelect-select ~ .MuiSvgIcon-root": {
+                        color: "#f2f2f2"
+                    },
                     "&.Mui-focused .MuiSelect-select ~ .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "#b18fcf"
+                        borderColor: "#0ACCBC"
                     },
                 }
             }
@@ -60,6 +74,38 @@ const theme = createTheme({
                 paper: {
                     backgroundColor: "#1b243f",
                     color: "#ffffff"
+                }
+            }
+        },
+        MuiFilledInput: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: "#002266",
+                    "&:hover": {
+                        backgroundColor:"#002C83"
+                    }
+                }
+            }
+        },
+        MuiFormControlLabel: {
+            styleOverrides: {
+                label: {
+                    color: "#ffffff"
+                }
+            }
+        },
+        MuiRadio: {
+            styleOverrides: {
+                root: {
+                    color: "#f2f2f2"
+                }
+            }
+        },
+        MuiInputBase: {
+            styleOverrides: {
+                formControl: {
+                    color: "#f2f2f2",
+                    borderColor: "#f2f2f2"
                 }
             }
         }
@@ -78,7 +124,7 @@ const SelectorDiv = styled('div')(({theme}) => ({
 }))
 
 const HeaderDiv = styled('div')(({theme}) => ({
-    height:"12vh", 
+    height:"10vh", 
     position:'fixed', 
     zIndex:3, 
     width:'100%',
@@ -88,16 +134,16 @@ const HeaderDiv = styled('div')(({theme}) => ({
 // }))
 
 const BackgroundPaper = styled(Paper)(({theme}) => ({
-    backgroundColor: theme.palette.secondary.main, 
+    backgroundColor: theme.palette.secondary.light, 
     width:'100%', 
     minHeight:'100%',
 }))
 
 const PageBackDiv = styled('div')(({theme}) => ({
     display:'flex',
-    top:'12%', 
+    top:'10%', 
     position:'absolute', 
-    height:'88vh', 
+    height:'90vh', 
     width:'100%',
 }))
 

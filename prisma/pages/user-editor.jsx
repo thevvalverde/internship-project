@@ -158,7 +158,7 @@ export default function UserEditor() {
 
     return (
         <BackgroundPaper>
-            <Header/>
+            <Header active={2}/>
             <Dialog
                 open={open}
                 onClose={handleClose}

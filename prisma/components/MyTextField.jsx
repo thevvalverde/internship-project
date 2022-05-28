@@ -13,7 +13,7 @@ export default function MyTextField({content, label, readonly, ml, consentHandle
                 value={content}
                 label={label}
                 onChange={consentHandler || handler}
-                color="info"
+                color="primary"
                 variant="standard" 
                 margin="dense"
                 fullWidth
@@ -21,6 +21,6 @@ export default function MyTextField({content, label, readonly, ml, consentHandle
                 InputProps={{
                     readOnly: readonly ? true : false,
                 }}
-                sx={{padding: '4px', backgroundColor:'secondary.light', input: {color: 'secondary.contrastText'}, label: {color: 'info.light', padding:'3px'}, textarea: {color: 'secondary.contrastText'}}}
+                sx={{padding: '4px', borderRadius:1, backgroundColor:'secondary.main', input: {color: 'secondary.contrastText'}, label: {color: 'info.dark', padding:'3px'}, textarea: {color: 'secondary.contrastText'}}}
             />
 }

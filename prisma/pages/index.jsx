@@ -123,7 +123,7 @@ export default function Home() {
 
     return (
         <BackgroundPaper>
-            <Header/>
+            <Header active={0}/>
             <PageBackDiv>
                 <SelectorDiv>
                     <OrgSearcher 

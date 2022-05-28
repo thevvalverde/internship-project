@@ -119,15 +119,15 @@ export default function OrgInfo({org}) {
         <Container>
             {orgInfo ? (
                 <>
-                    <Typography variant="overline" sx={{color:"warning.light"}}>Organization Info</Typography>
+                    <Typography variant="overline" sx={{color:"primary.light", fontWeight:900, fontSize:20}}>Organization Info</Typography>
                     <MyTextField content={name} handler={handleSetName} label="Organization Name" readonly={false} />
                     <div style={{position: 'relative', display: 'flex'}}>
                         <div style={{flex: 4, paddingRight:20}}>
                             <MyTextField content={id} label="Organization ID" readonly={true} fw/>
                         </div>
                         <div style={{flex: 1}}>
-                            <FormControl fullWidth sx={{mt:1, backgroundColor:'secondary.light', borderRadius:1, color:'secondary.contrastText',width:'103%'}}>
-                            <InputLabel id="display-select" sx={{color:'info.main', paddingTop:'3px'}}>Display</InputLabel>
+                            <FormControl fullWidth sx={{mt:1, backgroundColor:'secondary.main', borderRadius:1, color:'secondary.contrastText',width:'103%'}}>
+                            <InputLabel id="display-select" sx={{color:'info.dark', paddingTop:'3px'}}>Display</InputLabel>
                                 <Select
                                     labelId="display-select"
                                     id="display-select"
@@ -146,13 +146,13 @@ export default function OrgInfo({org}) {
                     </div>
                     <div style={{position:"relative", display:"flex"}}>
                         <div style={{flex:1, paddingRight:20}}>
-                            <MyTextField content={email} handler={handleSetEmail} label="Email" readonly={false} />
+                            <MyTextField content={email} handler={handleSetEmail} label="Email" readonly={false}/>
                         </div>
                         <div style={{flex:1, paddingLeft:20}}>
                             <MyTextField content={phone} handler={handleSetPhone} label="Phone Number" readonly={false} />
                         </div>
                     </div>
-                    <Typography variant="overline" sx={{color:"warning.light"}}>Privacy and Consents Info</Typography>
+                    <Typography variant="overline" sx={{color:"primary.light", fontWeight:900, fontSize:20}}>Privacy and Consents Info</Typography>
                     <MyTextField content={policy} handler={handleSetPolicy} label="Default Policy" readonly={false} ml />
                     {consents.map((value, index) => {
                         return (
@@ -169,21 +169,21 @@ export default function OrgInfo({org}) {
                                                 handleDateChange(newValue, index)
                                             }}
                                             renderInput={(params) => <TextField 
-                                                sx={{marginTop: '8px', backgroundColor:'secondary.light', input: {color: 'secondary.contrastText'}, label: {color: 'info.light', padding:'3px'}, textarea: {color: 'secondary.contrastText'}}}
+                                                sx={{marginTop: '8px', backgroundColor:'secondary.main', input: {color: 'secondary.contrastText'}, label: {color: 'info.dark', padding:'3px'}, textarea: {color: 'secondary.contrastText'}}}
                                             {...params} />}
                                         />
                                     </LocalizationProvider>
                                     {/* <MyTextField content={value.validUntil} label="Valid until" readonly={true} id={index}/> */}
                                 </div>
                                 <div style= {{flex:1, marginTop:7, marginBottom:5, marginLeft:10, textAlign:'right'}}>
-                                    <Button variant="outlined" aria-label="delete" color='info' sx={{height:'100%', width:'90%'}} onClick={() => removeConsent(index)}>
+                                    <Button variant="contained" aria-label="delete" color='error' sx={{height:'100%', width:'90%'}} onClick={() => removeConsent(index)}>
                                         X
                                     </Button>
                                 </div>
                             </div>
                         )
                     })}
-                    <Button variant="outlined" aria-label="add" color="success" sx={{width:'93%', marginTop:1}} onClick={addConsent}>+</Button>
+                    <Button variant="contained" aria-label="add" color="success" sx={{width:'92%', marginTop:1}} onClick={addConsent}>+</Button>
                     <Button variant="contained" aria-label="save" color="warning" sx={{width:'15%', float:'right', marginTop:3}} onClick={saveChanges} >Save Changes</Button>
                 </>
             )

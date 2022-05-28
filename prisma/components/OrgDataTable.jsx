@@ -109,7 +109,7 @@ function MyTableHead(props) {
         <TableHead sx={{width:'100%'}}>
             <TableRow key="header">
                 {consentHeaders.map((cell) => (
-                    <TableCell sx={{backgroundColor:'secondary.light', color:'secondary.contrastText'}}
+                    <TableCell sx={{backgroundColor:'secondary.dark', color:'secondary.contrastText'}}
                         key={cell.id}
                         align={cell.numeric ? 'right' : 'left'}
                         padding={cell.disablePadding ? 'none' : 'normal'}
@@ -139,7 +139,7 @@ function MyRow({row}) {
 
     return (
         <>
-           <TableRow sx={{'& > *': {borderBottom: 'unset'}}} onClick={() => setOpen(!open)}>
+           <TableRow sx={{'& > *': {borderBottom: 'unset'}, backgroundColor:'secondary.light', '&:hover':{backgroundColor: 'hovered.main', cursor:'pointer'}}} onClick={() => setOpen(!open)} className="main-row">
                 <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.id}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.subject}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.description}</TableCell>
@@ -149,27 +149,27 @@ function MyRow({row}) {
                 <TableCell sx={{color:'secondary.contrastText'}} align="right">{row.policy}</TableCell>
                 <TableCell sx={{color:'secondary.contrastText'}} align="left">{row.revoke}</TableCell>
            </TableRow> 
-           <TableRow sx={{backgroundColor:'secondary.main'}}>
-               <TableCell style={{paddingBottom: 0, paddinTop: 0}} colSpan={8}>
+           <TableRow sx={{backgroundColor:'secondary.main', padding:0}}>
+               <TableCell style={{padding: 0, borderTop:'1px solid black'}} colSpan={8}>
                    <Collapse in={open} timeout="auto" unmountOnExit>
-                       <Box sx={{magin:1}}>
-                           <Typography variant="h6" gutterBottom component="div" sx={{color:"warning.dark"}}>
-                               History
+                       <Box>
+                           <Typography variant="h6" gutterBottom component="div" sx={{color:"primary.main", margin:1}}>
+                               {`Subject ${row.id} Consent History`}
                            </Typography>
                            <Table size="small" aria-label="consent history">
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{color:'warning.light'}}>ID</TableCell>
-                                        <TableCell sx={{color:'warning.light'}}>Changed to</TableCell>
-                                        <TableCell sx={{color:'warning.light'}}>Timestamp</TableCell>
+                                        <TableCell sx={{color:'primary.light'}}>ID</TableCell>
+                                        <TableCell sx={{color:'primary.light'}}>Changed to</TableCell>
+                                        <TableCell sx={{color:'primary.light'}}>Timestamp</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {row.history.map((element) => (
-                                        <TableRow key={element.id}>
-                                            <TableCell sx={{color:'warning.light'}}>{element.id}</TableCell>
-                                            <TableCell sx={{color:'warning.light'}}>{element.changedValue}</TableCell>
-                                            <TableCell sx={{color:'warning.light'}}>{element.timestamp === "-"  ? "-" : new Date(element.timestamp).toLocaleString()}</TableCell>
+                                        <TableRow key={element.id} sx={{borderTop:'2px solid black'}}>
+                                            <TableCell sx={{color:'primary.light'}}>{element.id}</TableCell>
+                                            <TableCell sx={{color:'primary.light'}}>{element.changedValue}</TableCell>
+                                            <TableCell sx={{color:'primary.light'}}>{element.timestamp === "-"  ? "-" : new Date(element.timestamp).toLocaleString()}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -236,7 +236,7 @@ export default function OrgDataTable({data}) {
 
     return (
                 <TableContainer >
-                    <Table stickyHeader sx={{backgroundColor:'secondary.light'}}>
+                    <Table >
                         <MyTableHead 
                             order={order}
                             orderBy={orderBy}

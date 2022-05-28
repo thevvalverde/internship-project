@@ -5,8 +5,8 @@ export default function UserFilter({organizations, org, handleSetOrg, opt, handl
 
     return(
         <>
-            <hr/>
-            <Typography variant="h4">Filters</Typography>
+            <hr style={{width:'100%', marginTop:20}}/>
+            <Typography variant="h4" color="secondary">Filters</Typography>
             <br/>
             <FormControl fullWidth>
                 <InputLabel id="organization-filter">Organization</InputLabel>
@@ -39,7 +39,7 @@ export default function UserFilter({organizations, org, handleSetOrg, opt, handl
                 <Button 
                     onClick={resetFilter}
                     variant="contained"
-                    color="secondary"
+                    color="info"
                 >Reset Filters</Button>
             </FormControl>
         </>
