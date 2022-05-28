@@ -116,7 +116,7 @@ export default function OrgInfo({org}) {
     }
 
     return (
-        <Container>
+        <Container maxWidth='false'>
             {orgInfo ? (
                 <>
                     <Typography variant="overline" sx={{color:"primary.light", fontWeight:900, fontSize:20}}>Organization Info</Typography>
@@ -169,7 +169,7 @@ export default function OrgInfo({org}) {
                                                 handleDateChange(newValue, index)
                                             }}
                                             renderInput={(params) => <TextField 
-                                                sx={{marginTop: '8px', backgroundColor:'secondary.main', input: {color: 'secondary.contrastText'}, label: {color: 'info.dark', padding:'3px'}, textarea: {color: 'secondary.contrastText'}}}
+                                                sx={{width:'100%',marginTop: '8px', backgroundColor:'secondary.main', input: {color: 'secondary.contrastText'}, label: {color: 'info.dark', padding:'3px'}, textarea: {color: 'secondary.contrastText'}}}
                                             {...params} />}
                                         />
                                     </LocalizationProvider>
@@ -183,8 +183,8 @@ export default function OrgInfo({org}) {
                             </div>
                         )
                     })}
-                    <Button variant="contained" aria-label="add" color="success" sx={{width:'92%', marginTop:1}} onClick={addConsent}>+</Button>
-                    <Button variant="contained" aria-label="save" color="warning" sx={{width:'15%', float:'right', marginTop:3}} onClick={saveChanges} >Save Changes</Button>
+                    <Button variant="contained" aria-label="add" color="success" sx={{width:'92.2%', marginTop:1}} onClick={addConsent}>+</Button>
+                    <Button variant="contained" aria-label="save" color="info" sx={{width:'15%', float:'right', marginTop:3}} onClick={saveChanges} >Save Changes</Button>
                 </>
             )
             : null}

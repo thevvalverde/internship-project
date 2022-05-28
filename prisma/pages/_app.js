@@ -10,9 +10,9 @@ const theme = createTheme({
 
         },
         secondary: {
-            light: "#efefef",
-            main: "#DBDBDB",
-            dark: "#9d9d9d"
+            light: "#ececec",
+            main: "#cacaca",
+            dark: "#8c8c8c"
         },
         error: {
             main: "#AF3029",

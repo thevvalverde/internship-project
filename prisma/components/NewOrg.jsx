@@ -99,7 +99,7 @@ export default function NewOrg({finish, update}) {
     }
 
     return (
-        <Container >
+        <Container maxWidth='false'>
                     <Typography variant="overline" sx={{color:"primary.light", fontWeight:900, fontSize:20}}>Organization Info</Typography>
                     <MyTextField content={name} handler={handleSetName} label="Organization Name" readonly={false} />
                     <div style={{position: 'relative', display: 'flex'}}>
@@ -150,7 +150,7 @@ export default function NewOrg({finish, update}) {
                                                 handleDateChange(newValue, index)
                                             }}
                                             renderInput={(params) => <TextField 
-                                                sx={{marginTop: '8px', backgroundColor:'secondary.main', input: {color: 'secondary.contrastText'}, label: {color: 'info.light', padding:'3px'}, textarea: {color: 'secondary.contrastText'}}}
+                                                sx={{width:'100%',marginTop: '8px', backgroundColor:'secondary.main', input: {color: 'secondary.contrastText'}, label: {color: 'info.light', padding:'3px'}, textarea: {color: 'secondary.contrastText'}}}
                                             {...params} />}
                                         />
                                     </LocalizationProvider>
@@ -163,7 +163,7 @@ export default function NewOrg({finish, update}) {
                             </div>
                         )
                     })}
-                    <Button variant="contained" aria-label="add" color="success" sx={{width:'93%', marginTop:1}} onClick={addConsent}>+</Button>
+                    <Button variant="contained" aria-label="add" color="success" sx={{width:'92.2%', marginTop:1}} onClick={addConsent}>+</Button>
                     <Button variant="contained" aria-label="save" color="info" sx={{width:'15%', float:'right', marginTop:3}} onClick={saveChanges} >Save Changes</Button>
         </Container>
     )
