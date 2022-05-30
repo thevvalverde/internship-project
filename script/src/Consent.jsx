@@ -1,4 +1,7 @@
-import { Checkbox, FormControlLabel, FormGroup, Typography } from "@mui/material"
+import Checkbox from "@mui/material/Checkbox"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import FormGroup from "@mui/material/FormGroup"
+import Typography from "@mui/material/Typography"
 import React from "react"
 
 export default function Consent({consents, formik}) {

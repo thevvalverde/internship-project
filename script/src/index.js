@@ -1,9 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-// import './index1.css';
-// import './index2.css';
-import './index3.css';
 import 'regenerator-runtime/runtime';
 
 const widgetDivs = document.querySelectorAll('.tekprivacy-widget')

@@ -2,7 +2,7 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import LaunchIcon from '@mui/icons-material/Launch';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useFormik } from "formik";
+import { useFormik } from "formik/";
 import { useEffect, useState } from "react";
 import Consent from "./Consent";
 
