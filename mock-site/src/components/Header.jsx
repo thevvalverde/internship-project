@@ -55,7 +55,7 @@ export default function Header(props) {
 
     useEffect(() => {
         const asyncFetchAndSet = async() => {
-            const res = await fetch('https://tp-back-office.herokuapp.com/api/get-org-defaults')
+            const res = await fetch('https://tp-back-office.herokuapp.com/api/get-all-orgs')
             const data = await res.json()
             setOrgs(data.organizations)
         }
